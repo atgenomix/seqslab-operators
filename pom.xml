@@ -74,7 +74,7 @@
                 <configuration>
                     <reportsDirectory>${project.build.directory}/scalatest-reports</reportsDirectory>
                     <junitxml>.</junitxml>
-                    <filereports>PiperEngineTestSuite.txt</filereports>
+                    <filereports>SeqslabOperatorsTestSuite.txt</filereports>
                     <!--
                         As explained here: http://stackoverflow.com/questions/1660441/java-flag-to-enable-extended-serialization-debugging-info
                         The second option allows us better debugging for serialization-based errors.
@@ -167,6 +167,12 @@
             <groupId>com.github.fppt</groupId>
             <artifactId>jedis-mock</artifactId>
             <version>${jedis-mock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.binary.version}</artifactId>
+            <version>3.2.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
