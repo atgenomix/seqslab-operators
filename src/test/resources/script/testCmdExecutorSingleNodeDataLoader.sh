@@ -1,1 +1,0 @@
-ls ~{vcf1} > ~{vcfOutput1}

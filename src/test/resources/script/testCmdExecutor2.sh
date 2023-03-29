@@ -1,1 +1,0 @@
-cp ~{bam} ~{bamOutput}
