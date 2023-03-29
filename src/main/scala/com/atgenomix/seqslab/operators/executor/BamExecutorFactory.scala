@@ -1,9 +1,9 @@
 package com.atgenomix.seqslab.operators.executor
 
+import com.atgenomix.seqslab.operators.executor.BamExecutorFactory.BamExecutor
 import com.atgenomix.seqslab.piper.common.utils.{FileUtil, ProcessUtil}
 import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsFileLocalization}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.executor.BamExecutorFactory.BamExecutor
 import htsjdk.samtools.util.BinaryCodec
 import htsjdk.samtools.{SAMFileHeader, SAMTextHeaderCodec}
 import org.apache.spark.sql.Row

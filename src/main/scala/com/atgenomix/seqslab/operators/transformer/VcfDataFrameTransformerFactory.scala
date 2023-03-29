@@ -2,7 +2,7 @@ package com.atgenomix.seqslab.operators.transformer
 
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.transformer.VcfDataFrameTransformerFactory.VcfDataFrameTransformer
+import com.atgenomix.seqslab.operators.transformer.VcfDataFrameTransformerFactory.VcfDataFrameTransformer
 import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.catalyst.encoders.{ExpressionEncoder, RowEncoder}
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema

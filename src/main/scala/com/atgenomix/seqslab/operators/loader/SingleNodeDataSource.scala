@@ -3,7 +3,7 @@ package com.atgenomix.seqslab.operators.loader
 import com.atgenomix.seqslab.piper.common.utils.{AzureUtil, HDFSUtil}
 import com.atgenomix.seqslab.piper.plugin.api.loader._
 import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.loader.SingleNodeDataSource.SingleNodeDataLoader
+import com.atgenomix.seqslab.operators.loader.SingleNodeDataSource.SingleNodeDataLoader
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 

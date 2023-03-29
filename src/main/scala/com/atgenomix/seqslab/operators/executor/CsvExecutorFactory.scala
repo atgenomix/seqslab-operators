@@ -3,7 +3,7 @@ package com.atgenomix.seqslab.operators.executor
 import com.atgenomix.seqslab.piper.common.utils.FileUtil
 import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsFileLocalization}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.executor.CsvExecutorFactory.CsvExecutor
+import com.atgenomix.seqslab.operators.executor.CsvExecutorFactory.CsvExecutor
 import org.apache.spark.sql.Row
 
 import java.util

@@ -2,7 +2,7 @@ package com.atgenomix.seqslab.operators.writer
 
 import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.writer.{Writer, WriterSupport}
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.writer.GeneralWriterFactory.GeneralWriter
+import com.atgenomix.seqslab.operators.writer.GeneralWriterFactory.GeneralWriter
 import org.apache.spark.sql.{Dataset, Row}
 
 import java.lang
