@@ -1,4 +1,4 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.operators.executor
+package com.atgenomix.seqslab.operators.executor
 
 import com.atgenomix.seqslab.piper.plugin.api._
 import com.atgenomix.seqslab.piper.plugin.api.executor._

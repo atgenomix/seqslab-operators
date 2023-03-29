@@ -1,4 +1,4 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.operators.writer
+package com.atgenomix.seqslab.operators.writer
 
 import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.writer.{Writer, WriterSupport}

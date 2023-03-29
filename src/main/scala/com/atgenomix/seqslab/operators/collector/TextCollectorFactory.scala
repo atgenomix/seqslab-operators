@@ -1,4 +1,4 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.operators.collector
+package com.atgenomix.seqslab.operators.collector
 
 import com.atgenomix.seqslab.piper.plugin.api.collector.{Collector, CollectorSupport, SupportsAggregation}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, OperatorPipelineV3, PluginContext}

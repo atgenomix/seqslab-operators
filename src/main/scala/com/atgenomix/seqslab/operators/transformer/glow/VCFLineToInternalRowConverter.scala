@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.atgenomix.seqslab.piper.plugin.atgenomix.operators.transformer.glow
+package com.atgenomix.seqslab.operators.transformer.glow
 
 import htsjdk.samtools.ValidationStringency
 import htsjdk.samtools.util.OverlapDetector

@@ -1,4 +1,4 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.operators.loader
+package com.atgenomix.seqslab.operators.loader
 
 import com.atgenomix.seqslab.piper.common.utils.{AzureUtil, HDFSUtil}
 import com.atgenomix.seqslab.piper.plugin.api.loader._

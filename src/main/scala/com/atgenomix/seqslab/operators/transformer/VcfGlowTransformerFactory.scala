@@ -1,4 +1,4 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.operators.transformer
+package com.atgenomix.seqslab.operators.transformer
 
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
