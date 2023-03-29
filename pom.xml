@@ -264,4 +264,12 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Staging Repo</name>
+            <url>https://nexus-atgx.azurewebsites.net/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
 </project>
