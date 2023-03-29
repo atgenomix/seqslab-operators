@@ -78,7 +78,7 @@ object SparkHadoopSessionBuilder {
           .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
           .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
           .config("spark.databricks.delta.schema.autoMerge.enabled", "true")
-          .config("spark.piper.plugins", "com.atgenomix.seqslab.piper.plugin.atgenomix.AtgenomixPiperPlugin")
+          .config("spark.piper.plugins", "com.atgenomix.seqslab.OperatorPlugin")
           .getOrCreate()
       }
       spark
