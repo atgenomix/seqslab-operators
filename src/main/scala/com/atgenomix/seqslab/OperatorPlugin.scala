@@ -22,13 +22,13 @@ import com.atgenomix.seqslab.piper.plugin.api.executor.ExecutorSupport
 import com.atgenomix.seqslab.piper.plugin.api.loader.LoaderSupport
 import com.atgenomix.seqslab.piper.plugin.api.transformer.TransformerSupport
 import com.atgenomix.seqslab.piper.plugin.api.writer.WriterSupport
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.collector.BamCollectorFactory
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.executor._
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.loader._
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.partitioner._
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.transformer.{VcfDataFrameTransformerFactory, VcfGlowTransformerFactory}
-import com.atgenomix.seqslab.piper.plugin.atgenomix.operators.writer.GeneralWriterFactory
-import com.atgenomix.seqslab.piper.plugin.atgenomix.udf._
+import com.atgenomix.seqslab.operators.collector.BamCollectorFactory
+import com.atgenomix.seqslab.operators.executor._
+import com.atgenomix.seqslab.operators.loader._
+import com.atgenomix.seqslab.operators.partitioner._
+import com.atgenomix.seqslab.operators.transformer.{VcfDataFrameTransformerFactory, VcfGlowTransformerFactory}
+import com.atgenomix.seqslab.operators.writer.GeneralWriterFactory
+import com.atgenomix.seqslab.udf._
 import io.projectglow.Glow
 import io.projectglow.sql.optimizer.{ReplaceExpressionsRule, ResolveAggregateFunctionsRule, ResolveExpandStructRule, ResolveGenotypeFields}
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
@@ -70,26 +70,12 @@ class OperatorPlugin extends PiperPlugin {
       "FastqPartitioner" -> new FastqPartitionerFactory(),
       "BamPartitionerPart1" -> new BamPartitionerPart1Factory(),
       "BamPartitionerPart1Unmap" -> new BamPartitionerPart1UnmapFactory(),
-      "BamPartitionerHg19Part23" -> new BamPartitionerHg19Part23Factory(),
-      "BamPartitionerHg19Chr20Part45" -> new BamPartitionerHg19Chr20Part45Factory(),
-      "BamPartitionerHg19Part155" -> new BamPartitionerHg19Part155Factory(),
-      "BamPartitionerHg19Part3109" -> new BamPartitionerHg19Part3109Factory(),
-      "BamPartitionerHg19Part155Consensus" -> new BamPartitionerHg19Part155ConsensusFactory(),
-      "BamPartitionerGRCh38Part23" -> new BamPartitionerGRCh38Part23Factory(),
-      "BamPartitionerGRCh38Part50Consensus" -> new BamPartitionerGRCh38Part50ConsensusFactory(),
-      "BamPartitionerGRCh38Part50" -> new BamPartitionerGRCh38Part50Factory(),
-      "BamPartitionerGRCh38Part3101" -> new BamPartitionerGRCh38Part3101Factory(),
-      "VcfPartitionerHg19Part1" -> new VcfPartitionerHg19Part1Factory(),
-      "VcfPartitionerHg19Part23" -> new VcfPartitionerHg19Part23Factory(),
-      "VcfPartitionerHg19Part155" -> new VcfPartitionerHg19Part155Factory(),
-      "VcfPartitionerHg19Part3109" -> new VcfPartitionerHg19Part3109Factory(),
-      "VcfPartitionerHg19Part3109Unpadded" -> new VcfPartitionerHg19Part3109UnpaddedFactory(),
-      "VcfPartitionerGRCh38Part1" -> new VcfPartitionerGRCh38Part1Factory(),
-      "VcfPartitionerGRCh38Part23" -> new VcfPartitionerGRCh38Part23Factory(),
-      "VcfPartitionerGRCh38Part155" -> new VcfPartitionerGRCh38Part155Factory(),
-      "VcfPartitionerGRCh38Part3101" -> new VcfPartitionerGRCh38Part3101Factory(),
       "VcfDataFrameTransformer" -> new VcfDataFrameTransformerFactory(),
-      "VcfGlowTransformer" -> new VcfGlowTransformerFactory()
+      "VcfGlowTransformer" -> new VcfGlowTransformerFactory(),
+      "BamPartitioner" -> new BamPartitionerFactory(),
+      "ConsensusBamPartitioner" -> new ConsensusBamPartitionerFactory(),
+      "VcfPartitioner" -> new VcfPartitionerFactory(),
+      "BedPartitioner" -> new BedPartitionerFactory()
     ).asJava
   }
 
