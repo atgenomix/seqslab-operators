@@ -1,11 +1,11 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.tasks.cmd
+package com.atgenomix.seqslab.tasks.cmd
 
 
 import com.atgenomix.seqslab.piper.common.utils.HDFSUtil.getHadoopFileSystem
 import com.atgenomix.seqslab.piper.engine.cli.{Args4j, PiedPiperArgs}
 import com.atgenomix.seqslab.piper.engine.sql.PiperMain
-import com.atgenomix.seqslab.piper.plugin.atgenomix.SparkHadoopSessionBuilder
-import com.atgenomix.seqslab.piper.plugin.atgenomix.SparkHadoopSessionBuilder.server
+import com.atgenomix.seqslab.SparkHadoopSessionBuilder
+import com.atgenomix.seqslab.SparkHadoopSessionBuilder.server
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.Path
 import org.scalatest.ParallelTestExecution

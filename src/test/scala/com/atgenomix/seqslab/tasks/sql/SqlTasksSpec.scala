@@ -1,9 +1,9 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.tasks.sql
+package com.atgenomix.seqslab.tasks.sql
 
 import com.atgenomix.seqslab.piper.engine.cli.{Args4j, PiedPiperArgs}
 import com.atgenomix.seqslab.piper.engine.sql.PiperMain
-import com.atgenomix.seqslab.piper.plugin.atgenomix.SparkHadoopSessionBuilder
-import com.atgenomix.seqslab.piper.plugin.atgenomix.SparkHadoopSessionBuilder.{jedis, server}
+import com.atgenomix.seqslab.SparkHadoopSessionBuilder
+import com.atgenomix.seqslab.SparkHadoopSessionBuilder.{jedis, server}
 import io.delta.tables.DeltaTable
 import models._
 import org.apache.spark.sql.functions.col

@@ -14,7 +14,7 @@
  * laws and state trade secret laws, punishable by civil and criminal penalties.
  */
 
-package com.atgenomix.seqslab.operators
+package com.atgenomix.seqslab
 
 import com.atgenomix.seqslab.piper.plugin.api._
 import com.atgenomix.seqslab.piper.plugin.api.collector.CollectorSupport
@@ -32,11 +32,12 @@ import com.atgenomix.seqslab.piper.plugin.atgenomix.udf._
 import io.projectglow.Glow
 import io.projectglow.sql.optimizer.{ReplaceExpressionsRule, ResolveAggregateFunctionsRule, ResolveExpandStructRule, ResolveGenotypeFields}
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
+import org.apache.spark.sql.catalyst.rules.Rule
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.types.{ArrayType, LongType}
 
 import java.util
-import scala.jdk.CollectionConverters.mapAsJavaMapConverter
+import scala.jdk.CollectionConverters.{mapAsJavaMapConverter, seqAsJavaListConverter}
 
 
 class OperatorPlugin extends PiperPlugin {
