@@ -1,0 +1,144 @@
+{
+  "inputs": {
+    "vcfDemo.vcfAnnotationTask.bed": "/test.bed",
+    "vcfDemo.vcfAnnotationTask.bed2": "/test3101.bed"
+
+  },
+  "outputs": {
+    "vcfDemo.vcfAnnotationTask.bedOutput": "variant_effect_output155.bed",
+    "vcfDemo.vcfAnnotationTask.bedOutput2": "variant_effect_output3101.bed"
+
+  },
+  "datasets": {
+    "vcfDemo.vcfAnnotationTask.bedOutput": {
+      "id": "drs_default_id",
+      "name": "variant_effect_output.txt",
+      "file_type": "txt",
+      "mime_type": "application/octet-stream",
+      "description": "Auto-created by WE2 in Run: run_deltalake_demo_12",
+      "size": 10,
+      "tags": [
+        "Deltalake-Test/vcfDemo/vcfAnnotationTask/vcfOutput1"
+      ],
+      "created_time": "2022-10-06T20:11:38",
+      "updated_time": "2022-10-06T20:11:38",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/variant_effect_output155.bed",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "vcfDemo.vcfAnnotationTask.bedOutput2": {
+      "id": "drs_default_id",
+      "name": "variant_effect_output.txt",
+      "file_type": "txt",
+      "mime_type": "application/octet-stream",
+      "description": "Auto-created by WE2 in Run: run_deltalake_demo_12",
+      "size": 10,
+      "tags": [
+        "Deltalake-Test/vcfDemo/vcfAnnotationTask/vcfOutput1"
+      ],
+      "created_time": "2022-10-06T20:11:38",
+      "updated_time": "2022-10-06T20:11:38",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/variant_effect_output3101.bed",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "vcfDemo.vcfAnnotationTask.bed": {
+      "id": "drs_aM8uEpsvfy4DMhT",
+      "name": "test.bed",
+      "self_uri": "drs://dev-api.seqslab.net/drs_aM8uEpsvfy4DMhT",
+      "file_type": "bed",
+      "mime_type": "plain/txt",
+      "size": 29814,
+      "tags": [],
+      "created_time": "2022-09-28T03:44:41.506377Z",
+      "updated_time": "2022-09-28T03:44:41.506377Z",
+      "checksums": [
+        {
+          "checksum": "dc292c7e89bb7dceda838c94be1e297ba9304f9e5495ee51cc6ef7129b2be52c",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/datasetBed/contiguous_unmasked_regions_155_parts",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "vcfDemo.vcfAnnotationTask.bed2": {
+      "id": "drs_aM8uEpsvfy4DMhT",
+      "name": "test.bed",
+      "self_uri": "drs://dev-api.seqslab.net/drs_aM8uEpsvfy4DMhT",
+      "file_type": "bed",
+      "mime_type": "plain/txt",
+      "size": 29814,
+      "tags": [],
+      "created_time": "2022-09-28T03:44:41.506377Z",
+      "updated_time": "2022-09-28T03:44:41.506377Z",
+      "checksums": [
+        {
+          "checksum": "dc292c7e89bb7dceda838c94be1e297ba9304f9e5495ee51cc6ef7129b2be52c",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/datasetBed/contiguous_unmasked_regions_3101_parts.bed",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "vcfDemo.vcfAnnotationTask.bedOutput": [],
+    "vcfDemo.vcfAnnotationTask.bedOutput2": [],
+    "vcfDemo.vcfAnnotationTask.bed":  [
+      {
+        "name": "BedPartitioner",
+        "arguments": {
+          "refSeqDict": "https://seqslabbundles.blob.core.windows.net/static/reference/38/GRCH/ref.dict",
+          "partBed": "/bed/38/chromosomes"
+        }
+      },
+      "BedExecutor"
+    ],
+    "vcfDemo.vcfAnnotationTask.bed2":  [
+      {
+        "name": "BedPartitioner",
+        "arguments": {
+          "refSeqDict": "https://seqslabbundles.blob.core.windows.net/static/reference/38/GRCH/ref.dict",
+          "partBed": "/bed/38/chromosomes"
+        }
+      },
+      "BedExecutor"
+    ]
+  }
+}

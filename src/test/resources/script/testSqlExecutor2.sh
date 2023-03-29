@@ -1,0 +1,1 @@
+INSERT INTO output SELECT * FROM table1 LIMIT 10

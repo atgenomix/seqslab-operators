@@ -1,0 +1,225 @@
+{
+  "inputs": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outPathJson": "NA12878_Fastp.json",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.dockerImage": "atgenomix.azurecr.io/atgenomix/seqslab_runtime-1.4_ubuntu-18.04_preprocessgatk4-4.2.0.0",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR2": "R2.fq.gz",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outPathHtml": "NA12878_Fastp.html",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outPathFastqR1": "NA12878_fastp_R1.fastq.gz",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR1": "R1.fq.gz",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outPathFastqR2": "NA12878_fastp_R2.fastq.gz",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.sampleName": "NA12878",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.thread": "16",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.ref": "ref.fa"
+  },
+  "outputs": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastqR2": "NA12878_fastp_R2.fastq.gz",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpJson": "NA12878_Fastp.json",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastqR1": "NA12878_fastp_R1.fastq.gz",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpHtml": "NA12878_Fastp.html"
+  },
+  "datasets": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.ref": {
+      "id": "drs_DHDJR2fDcfOiTm2",
+      "self_uri": "drs://127.0.0.1/drs_DHDJR2fDcfOiTm2",
+      "file_type": "fastq.gz",
+      "mime_type": "application/gzip",
+      "size": 388858253,
+      "created_time": "2022-06-21T06:44:01.340119Z",
+      "updated_time": "2022-06-21T06:44:01.340119Z",
+      "checksums": [
+        {
+          "checksum": "d0207e1aa8307a12484803dc2a15a80a688e3b2020a593bf76d99931c838b800",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "<inputType>",
+          "access_url": {
+            "url": "<inputPrefix>inputs/shellExecutor/ref",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR1": {
+      "id": "drs_DHDJR2fDcfOiTml",
+      "self_uri": "drs://127.0.0.1/drs_DHDJR2fDcfOiTml",
+      "file_type": "fastq.gz",
+      "mime_type": "application/gzip",
+      "size": 388858253,
+      "created_time": "2022-06-21T06:44:01.340119Z",
+      "updated_time": "2022-06-21T06:44:01.340119Z",
+      "checksums": [
+        {
+          "checksum": "d0207e1aa8307a12484803dc2a15a80a688e3b2020a593bf76d99931c838b800",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "<inputType>",
+          "access_url": {
+            "url": "<inputPrefix>inputs/datasetFastq/SRR400264_00_R1.fastq.gz",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR2": {
+      "id": "drs_oEg0ZKfJmImj2Qj",
+      "self_uri": "drs://127.0.0.1/drs_oEg0ZKfJmImj2Qj",
+      "file_type": "fastq.gz",
+      "mime_type": "application/gzip",
+      "size": 426691439,
+      "created_time": "2022-06-21T06:44:28.378737Z",
+      "updated_time": "2022-06-21T06:44:28.378737Z",
+      "checksums": [
+        {
+          "checksum": "004c94cb9cc7dfc07e29a6b2a3243e6c63e9441d64060dab37b27d48a311ce9b",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "<inputType>",
+          "access_url": {
+            "url": "<inputPrefix>inputs/datasetFastq/SRR400264_00_R2.fastq.gz",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastqR2": {
+      "id": "drs_default_id",
+      "name": "NA12878_fastp_R2.fastq.gz",
+      "file_type": "fastq.gz",
+      "mime_type": "application/gzip",
+      "description": "Auto-created by WE2 in Run: run_k2KeeWf6l2Pof31",
+      "size": 10,
+      "tags": [
+        "TestDrive-PreprocessImage-No-Integrity/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/Fastp/outFileFastqR2"
+      ],
+      "created_time": "2022-12-19T07:39:01",
+      "updated_time": "2022-12-19T07:39:01",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "<outputType>",
+          "access_url": {
+            "url": "<outputPrefix>call-Fastp/NA12878_fastp_R2.fastq.gz/",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpHtml": {
+      "id": "drs_default_id",
+      "name": "NA12878_Fastp.html",
+      "file_type": "html",
+      "mime_type": "text/html",
+      "description": "Auto-created by WE2 in Run: run_k2KeeWf6l2Pof31",
+      "size": 10,
+      "tags": [
+        "TestDrive-PreprocessImage-No-Integrity/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/Fastp/outFileFastpHtml"
+      ],
+      "created_time": "2022-12-19T07:39:01",
+      "updated_time": "2022-12-19T07:39:01",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "<outputType>",
+          "access_url": {
+            "url": "<outputPrefix>call-Fastp/NA12878_Fastp.html/",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpJson": {
+      "id": "drs_default_id",
+      "name": "NA12878_Fastp.json",
+      "file_type": "json",
+      "mime_type": "application/json",
+      "description": "Auto-created by WE2 in Run: run_k2KeeWf6l2Pof31",
+      "size": 10,
+      "tags": [
+        "TestDrive-PreprocessImage-No-Integrity/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/Fastp/outFileFastpJson"
+      ],
+      "created_time": "2022-12-19T07:39:01",
+      "updated_time": "2022-12-19T07:39:01",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "<outputType>",
+          "access_url": {
+            "url": "<outputPrefix>call-Fastp/NA12878_Fastp.json/",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastqR1": {
+      "id": "drs_default_id",
+      "name": "NA12878_fastp_R1.fastq.gz",
+      "file_type": "fastq.gz",
+      "mime_type": "application/gzip",
+      "description": "Auto-created by WE2 in Run: run_k2KeeWf6l2Pof31",
+      "size": 10,
+      "tags": [
+        "TestDrive-PreprocessImage-No-Integrity/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/Fastp/outFileFastqR1"
+      ],
+      "created_time": "2022-12-19T07:39:01",
+      "updated_time": "2022-12-19T07:39:01",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "<outputType>",
+          "access_url": {
+            "url": "<outputPrefix>call-Fastp/NA12878_fastp_R1.fastq.gz/",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.ref": [
+      {
+        "name": "RefLoader",
+        "scope": "task",
+        "arguments": {}
+      }
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastqR2": [],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR2": [
+      {
+        "name": "FastqPartitioner",
+        "arguments": {"readsPerChunk":  2500000}
+      }
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpHtml": [],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpJson": [],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR1": [
+      {
+        "name": "FastqPartitioner",
+        "arguments": {"readsPerChunk":  2500000}
+      }
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastqR1": []
+  }
+}

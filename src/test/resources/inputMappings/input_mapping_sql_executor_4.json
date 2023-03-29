@@ -1,0 +1,56 @@
+{
+  "inputs": {
+    "deltalake.table0": "/tmp/test.vcf.gz"
+  },
+  "outputs": {
+    "deltalake.output": "/tmp/source.delta"
+  },
+  "datasets": {
+    "deltalake.table0": {
+      "id": "drs_xxxxxxxxxxxxxxx",
+      "created_time": "2021-10-30T01:45:31Z",
+      "updated_time": "<updatedTime>",
+      "checksums": [],
+      "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+      "file_type": "vcf.gz",
+      "size": 238196,
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "region": "westus2",
+          "access_tier": "hot",
+          "access_id": "11",
+          "access_url": {
+            "headers": {},
+            "url": "hdfs://localhost:9000/inputs/vcfCsv/test.vcf.gz"
+          }
+        }
+      ]
+    },
+    "deltalake.output": {
+      "id": "drs_xxxxxxxxxxxxxxx",
+      "created_time": "2021-10-30T01:45:31.004766Z",
+      "updated_time": "2021-10-30T01:45:31.004766Z",
+      "file_type": "delta",
+      "checksums": [],
+      "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+      "size": 238196,
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "region": "westus2",
+          "access_tier": "hot",
+          "access_id": "11",
+          "access_url": {
+            "headers": {},
+            "url": "hdfs://localhost:9000/plugin_test/sql_executor_test/outputs/test4"
+          }
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "deltalake.table0": [ "VcfGlowTransformer", "TableLocalizationExecutor" ],
+    "deltalake.output": []
+  }
+}

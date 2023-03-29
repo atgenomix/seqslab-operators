@@ -1,0 +1,214 @@
+{
+  "inputs": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.recalibration_report_filename": [
+      "NA12878.hg19.recal_data0.csv",
+      "NA12878.hg19.recal_data1.csv"
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.command_mem_gb": 4,
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.docker_image": "atgenomix.azurecr.io/atgenomix/seqslab_runtime-1.4_ubuntu-18.04_preprocessgatk4-4.2.0.0",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.input_bam_index": [
+      "NA12878.hg19.aligned.duplicate_marked.sorted0.bai",
+      "NA12878.hg19.aligned.duplicate_marked.sorted1.bai"
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.preemptible_tries": 3,
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.known_indels_sites_indices": [
+      "hg19/Homo_sapiens_known_indels.vcf.gz.tbi",
+      "hg19/Mills_and_1000G_gold_standard.indels.vcf.gz.tbi"
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.disk_size": 200,
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.mem_size_gb": 6,
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.maxMem": 6,
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.gatk_path": "/gatk/gatk-4.2.0.0/gatk",
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.SampleNames": [
+      "C02A22092201SR_pmh002a",
+      "C02A22102001S_pmh015a"
+    ]
+  },
+  "outputs": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.recalibration_report": [
+      "NA12878.hg19.recal_data0.csv",
+      "NA12878.hg19.recal_data1.csv"
+    ]
+  },
+  "datasets": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.recalibration_report": [
+      {
+        "id": "drs_default_id",
+        "name": "NA12878.hg19.recal_data0.csv",
+        "file_type": "csv",
+        "mime_type": "text/csv",
+        "description": "Auto-created by WE2 in Run: run_HlZJL3pSfdS11Pj-5",
+        "size": 10,
+        "tags": [
+          "TestDrive-Latest-CopyToLocal/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/BaseRecalibrator/recalibration_report/0"
+        ],
+        "created_time": "2022-12-30T00:12:33",
+        "updated_time": "2022-12-30T00:12:33",
+        "checksums": [],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/plugin_test/cmd_executor_test_array_file/outputs/call-BaseRecalibrator/NA12878.hg19.recal_data0.csv/",
+              "headers": {}
+            },
+            "region": "westus3",
+            "access_tier": "hot"
+          }
+        ]
+      },
+      {
+        "id": "drs_default_id",
+        "name": "NA12878.hg19.recal_data1.csv",
+        "file_type": "csv",
+        "mime_type": "text/csv",
+        "description": "Auto-created by WE2 in Run: run_HlZJL3pSfdS11Pj-5",
+        "size": 10,
+        "tags": [
+          "TestDrive-Latest-CopyToLocal/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/BaseRecalibrator/recalibration_report/1"
+        ],
+        "created_time": "2022-12-30T00:12:33",
+        "updated_time": "2022-12-30T00:12:33",
+        "checksums": [],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/plugin_test/cmd_executor_test_array_file/outputs/call-BaseRecalibrator/NA12878.hg19.recal_data1.csv/",
+              "headers": {}
+            },
+            "region": "westus3",
+            "access_tier": "hot"
+          }
+        ]
+      }
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.input_bam_index": [
+      {
+        "id": "drs_NfqZyFubzJ3U8TY-1",
+        "name": "NA12878.hg19.aligned.duplicate_marked.sorted.bai",
+        "self_uri": "drs://dev-run-test-api.seqslab.net/drs_NfqZyFubzJ3U8TY",
+        "file_type": "bai",
+        "mime_type": "application/octet-stream",
+        "description": "Auto-created by WE2 in Run: run_HlZJL3pSfdS11Pj-4",
+        "size": 928112,
+        "tags": [
+          "TestDrive-Latest-CopyToLocal/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/SortAndFixTags/output_bam_index"
+        ],
+        "created_time": "2022-12-29T07:28:36Z",
+        "updated_time": "2022-12-29T07:23:48Z",
+        "checksums": [
+          {
+            "checksum": "847827837dd9a82828f45ceb5ab697c7a493c8d7d20adc54f23ecfbea40ef278",
+            "type": "sha256"
+          }
+        ],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/datasetBam/test.bam",
+              "headers": {}
+            },
+            "region": "westus3",
+            "access_tier": "hot"
+          }
+        ]
+      },
+      {
+        "id": "drs_NfqZyFubzJ3U8TY-2",
+        "name": "NA12878.hg19.aligned.duplicate_marked.sorted.bai",
+        "self_uri": "drs://dev-run-test-api.seqslab.net/drs_NfqZyFubzJ3U8TY",
+        "file_type": "bai",
+        "mime_type": "application/octet-stream",
+        "description": "Auto-created by WE2 in Run: run_HlZJL3pSfdS11Pj-4",
+        "size": 928112,
+        "tags": [
+          "TestDrive-Latest-CopyToLocal/GermlineSnpsIndelsGatk4Hg19/PreProcessingForVariantDiscovery_GATK4/SortAndFixTags/output_bam_index"
+        ],
+        "created_time": "2022-12-29T07:28:36Z",
+        "updated_time": "2022-12-29T07:23:48Z",
+        "checksums": [
+          {
+            "checksum": "847827837dd9a82828f45ceb5ab697c7a493c8d7d20adc54f23ecfbea40ef278",
+            "type": "sha256"
+          }
+        ],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/datasetBam/test.bam",
+              "headers": {}
+            },
+            "region": "westus3",
+            "access_tier": "hot"
+          }
+        ]
+      }
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.known_indels_sites_indices": [
+      {
+        "id": "drs_vQkUPP6U0T90QLr",
+        "self_uri": "drs://127.0.0.1/drs_vQkUPP6U0T90QLr",
+        "file_type": "tbi",
+        "mime_type": "application/octet-stream",
+        "size": 1556014,
+        "created_time": "2022-05-03T13:13:39.664813Z",
+        "updated_time": "2022-05-03T13:13:39.664813Z",
+        "checksums": [
+          {
+            "checksum": "af322ed97535357055bde57d27a55b82e1c13a1f4d92321e2f921cc785611515",
+            "type": "sha256"
+          }
+        ],
+        "access_methods": [
+          {
+            "type": "https",
+            "access_url": {
+              "url": "https://seqslabbundles.blob.core.windows.net/static/reference/19/HG/genetic_map_chr22_combined_b37.txt",
+              "headers": {}
+            },
+            "region": "westus2",
+            "access_tier": "hot"
+          }
+        ]
+      },
+      {
+        "id": "drs_zKDNhTrtXQAeP0a",
+        "self_uri": "drs://127.0.0.1/drs_zKDNhTrtXQAeP0a",
+        "file_type": "tbi",
+        "mime_type": "application/octet-stream",
+        "size": 1501571,
+        "created_time": "2022-05-03T13:14:03.495879Z",
+        "updated_time": "2022-05-03T13:14:03.495879Z",
+        "checksums": [
+          {
+            "checksum": "a8a3d64b5975a6a7c2ad00e3d52694c35e536350ffaf7399d0de50a363c20961",
+            "type": "sha256"
+          }
+        ],
+        "access_methods": [
+          {
+            "type": "https",
+            "access_url": {
+              "url": "https://seqslabbundles.blob.core.windows.net/static/reference/19/HG/genetic_map_chr21_combined_b37.txt",
+              "headers": {}
+            },
+            "region": "westus2",
+            "access_tier": "hot"
+          }
+        ]
+      }
+    ]
+  },
+  "tasks": {
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.input_bam_index": [
+      "PartitionDataLoader"
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.known_indels_sites_indices": [
+      "RefLoader"
+    ],
+    "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.BaseRecalibrator.recalibration_report": []
+  }
+}
