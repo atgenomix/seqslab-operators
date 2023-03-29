@@ -1,0 +1,65 @@
+{
+  "inputs": {
+    "bamDemo.bamPartitionTask.bam": "/test.bam"
+  },
+  "outputs": {
+    "bamDemo.bamPartitionTask.bamOutput": "output.bam"
+  },
+  "datasets": {
+    "bamDemo.bamPartitionTask.bamOutput": {
+      "id": "drs_default_id",
+      "name": "output.bam",
+      "file_type": "bam",
+      "mime_type": "application/octet-stream",
+      "description": "Auto-created by WE2 in Run: run_deltalake_demo_12",
+      "size": 10,
+      "tags": [],
+      "created_time": "2022-10-06T20:11:38",
+      "updated_time": "2022-10-06T20:11:38",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/cmd_executor_test_2/outputs/output.bam",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "bamDemo.bamPartitionTask.bam": {
+      "id": "drs_aM8uEpsvfy4DMhT",
+      "name": "test.vcf.gz",
+      "self_uri": "drs://dev-api.seqslab.net/drs_aM8uEpsvfy4DMhT",
+      "file_type": "bam",
+      "mime_type": "",
+      "size": 29814,
+      "tags": [],
+      "created_time": "2022-09-28T03:44:41.506377Z",
+      "updated_time": "2022-09-28T03:44:41.506377Z",
+      "checksums": [
+        {
+          "checksum": "dc292c7e89bb7dceda838c94be1e297ba9304f9e5495ee51cc6ef7129b2be52c",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/datasetBam/test.bam",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "bamDemo.bamPartitionTask.bamOutput": [],
+    "bamDemo.bamPartitionTask.bam":  [ "BamPartitionerHg19Part155", "BamExecutor" ]
+  }
+}

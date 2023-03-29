@@ -1,0 +1,3 @@
+{"protocol":{"minReaderVersion":2,"minWriterVersion":5}}
+{"metaData":{"id":"6252ea37-bb47-44a0-9480-6839e9c1dfa9","format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[]}","partitionColumns":[],"configuration":{"delta.columnMapping.mode":"name","delta.columnMapping.maxColumnId":"0"},"createdTime":1677370157031}}
+{"commitInfo":{"timestamp":1677372658235,"operation":"SET TBLPROPERTIES","operationParameters":{"properties":"{\"delta.columnMapping.mode\":\"name\",\"delta.minReaderVersion\":\"2\",\"delta.minWriterVersion\":\"5\"}"},"readVersion":0,"isolationLevel":"Serializable","isBlindAppend":true,"operationMetrics":{},"engineInfo":"Apache-Spark/3.3.0 Delta-Lake/2.1.1","txnId":"7287afff-0e6d-4a91-8c1d-013297c207ad"}}
