@@ -8,6 +8,7 @@
     <packaging>jar</packaging>
 
     <properties>
+        <avro.version>1.8.2</avro.version>
         <spark.version>3.3.0</spark.version>
         <scala.version>2.12.15</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
@@ -176,6 +177,12 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-mllib_${scala.binary.version}</artifactId>
             <version>${spark.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- adam -->
