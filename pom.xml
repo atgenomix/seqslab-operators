@@ -207,24 +207,6 @@
             <version>${avro.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- adam -->
-        <dependency>
-            <groupId>org.bdgenomics.adam</groupId>
-            <artifactId>adam-core-spark3_${scala.binary.version}</artifactId>
-            <version>${adam.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.scala-lang</groupId>
-                    <artifactId>scala-library</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.samtools</groupId>
-                    <artifactId>htsjdk</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>provided</scope>
-        </dependency>
-        <!-- argument parser -->
         <dependency>
             <groupId>args4j</groupId>
             <artifactId>args4j</artifactId>
