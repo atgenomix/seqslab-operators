@@ -8,6 +8,7 @@
     <packaging>jar</packaging>
 
     <properties>
+        <operators.version>3.0.1</operators.version>
         <avro.version>1.8.2</avro.version>
         <spark.version>3.3.0</spark.version>
         <scala.version>2.12.15</scala.version>
@@ -25,7 +26,7 @@
         <repository>
             <id>nexus</id>
             <name>Nexus Staging Repo</name>
-            <url>https://nexus-atgx.azurewebsites.net/repository/maven-releases/</url>
+            <url>https://nexus-atgx.azurewebsites.net/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -211,26 +212,9 @@
             <version>2.33</version>
         </dependency>
         <dependency>
-            <groupId>com.atgenomix.seqslab</groupId>
-            <artifactId>models</artifactId>
-            <version>DEV_java_11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.atgenomix.seqslab</groupId>
-            <artifactId>piper-common</artifactId>
-            <version>DEV_feature_support_java_11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.atgenomix.seqslab</groupId>
-            <artifactId>piper-operators</artifactId>
-            <version>DEV_feature_support_java_11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atgenomix.seqslab</groupId>
-            <artifactId>piper-engine</artifactId>
-            <version>DEV_feature_support_java_11</version>
-            <scope>test</scope>
+            <groupId>com.atgenomix.seqslab.plugins</groupId>
+            <artifactId>seqslab-operator-plugin-api</artifactId>
+            <version>${operators.version}</version>
         </dependency>
         <dependency>
             <groupId>io.delta</groupId>
