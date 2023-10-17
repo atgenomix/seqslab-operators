@@ -1,5 +1,6 @@
 {
   "inputs": {
+    "deltalake.column_name": "genotypes",
     "deltalake.table0": "/tmp/test.vcf.gz"
   },
   "outputs": {

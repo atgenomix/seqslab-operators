@@ -2,8 +2,8 @@ package com.atgenomix.seqslab.operators.partitioner
 
 import com.atgenomix.seqslab.operators.partitioner.BamPartitionerPart1UnmapFactory.BamPartitionerPart1Unmap
 import com.atgenomix.seqslab.piper.common.genomics.Bam.ByteArrayUtil
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import org.apache.spark.sql.{Dataset, Encoder, Encoders, Row}
 
 case class RawBAM(

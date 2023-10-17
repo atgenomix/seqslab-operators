@@ -2,12 +2,12 @@ package com.atgenomix.seqslab.operators.partitioner
 
 import com.atgenomix.seqslab.operators.partitioner.BedPartitionerFactory.BedPartitioner
 import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.udf.genomeBedPartFunc
 import org.apache.spark.sql.functions.{col, explode, udf}
 import org.apache.spark.sql.types._
-import org.apache.spark.sql._
+import org.apache.spark.sql.{Column, DataFrame, Dataset, Row, functions}
 
 import java.net.URL
 import scala.io.Source
@@ -29,14 +29,14 @@ object BedPartitionerFactory {
           rp
         else
           new URL(ref.asInstanceOf[String])
-      } else getClass.getResource("/reference/38/GRCH/ref.dict")
+      } else throw new IllegalArgumentException("BedPartitioner:refSeqDict cannot be null")
       this.partBed = if (bed != null) {
         val rp = getClass.getResource(bed.asInstanceOf[String])
         if (rp != null)
           rp
         else
           new URL(bed.asInstanceOf[String])
-      } else getClass.getResource("/bed/38/contiguous_unmasked_regions_50_parts")
+      } else throw new IllegalArgumentException("BedPartitioner:partBed cannot be null")
 
       val udf = org.apache.spark.sql.functions.udf(new genomeBedPartFunc(this.partBed, this.refSeqDict), ArrayType(LongType))
       this.udfName = f"$opName-${refSeqDict.getFile}-${partBed.getFile}"

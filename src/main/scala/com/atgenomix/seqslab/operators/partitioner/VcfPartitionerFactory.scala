@@ -2,8 +2,8 @@ package com.atgenomix.seqslab.operators.partitioner
 
 import com.atgenomix.seqslab.operators.partitioner.VcfPartitionerFactory.VcfPartitioner
 import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.udf.genomePartFunc
 import org.apache.spark.sql.functions.{col, explode, lit, udf}
 import org.apache.spark.sql.types.{ArrayType, LongType}
@@ -30,14 +30,14 @@ object VcfPartitionerFactory {
           rp
         else
           new URL(ref.asInstanceOf[String])
-      } else getClass.getResource("/reference/38/GRCH/ref.dict")
+      } else throw new IllegalArgumentException("VcfPartitioner:refSeqDict cannot be null")
       this.partBed = if (bed != null) {
         val rp = getClass.getResource(bed.asInstanceOf[String])
         if (rp != null)
           rp
         else
           new URL(bed.asInstanceOf[String])
-      } else getClass.getResource("/bed/38/contiguous_unmasked_regions_50_parts")
+      } else throw new IllegalArgumentException("VcfPartitioner:partBed cannot be null")
 
       val udf = org.apache.spark.sql.functions.udf(new genomePartFunc(this.partBed, this.refSeqDict), ArrayType(LongType))
       this.udfName = f"$opName-${refSeqDict.getFile}-${partBed.getFile}"

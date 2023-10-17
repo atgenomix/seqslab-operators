@@ -1,8 +1,8 @@
 package com.atgenomix.seqslab.operators.collector
 
 import com.atgenomix.seqslab.operators.collector.TextCollectorFactory.TextCollector
-import com.atgenomix.seqslab.piper.plugin.api.collector.{Collector, CollectorSupport, SupportsAggregation}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, OperatorPipelineV3, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.collector.{Collector, CollectorSupport, SupportsAggregation}
 import org.apache.spark.sql.{Dataset, Row}
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
 import org.apache.spark.sql.types.{DataTypes, StructType}

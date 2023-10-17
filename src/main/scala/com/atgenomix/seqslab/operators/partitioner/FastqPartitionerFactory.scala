@@ -18,8 +18,8 @@ package com.atgenomix.seqslab.operators.partitioner
 
 import com.atgenomix.seqslab.operators.partitioner.FastqPartitionerFactory.FastqPartitioner
 import com.atgenomix.seqslab.piper.common.genomics.Fastq
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsOrdering, SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsOrdering, SupportsPartitioner, Transformer, TransformerSupport}
 import org.apache.spark.sql.functions.{col, udf}
 import org.apache.spark.sql.{Column, Dataset, Row}
 import org.apache.spark.storage.StorageLevel

@@ -1,1 +1,2 @@
-SELECT hardy_weinberg(genotypes) AS hardy_weinberg FROM table0 LIMIT 100
+SELECT hardy_weinberg(~{column_name}) AS hardy_weinberg FROM table0 \
+LIMIT 100

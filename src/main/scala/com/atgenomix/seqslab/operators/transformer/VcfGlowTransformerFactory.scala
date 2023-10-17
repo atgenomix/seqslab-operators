@@ -1,9 +1,9 @@
 package com.atgenomix.seqslab.operators.transformer
 
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.operators.transformer.VcfGlowTransformerFactory.VcfGlowTransformer
 import com.atgenomix.seqslab.operators.transformer.glow.VCFLineToInternalRowConverter
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import htsjdk.samtools.ValidationStringency
 import htsjdk.tribble.readers.{AsciiLineReader, AsciiLineReaderIterator}
 import htsjdk.variant.vcf.{VCFCodec, VCFFormatHeaderLine, VCFHeader, VCFInfoHeaderLine}

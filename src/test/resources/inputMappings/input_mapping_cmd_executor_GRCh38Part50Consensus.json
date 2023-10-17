@@ -62,7 +62,7 @@
     "bamDemo.bamPartitionTask.bamOutput": [],
     "bamDemo.bamPartitionTask.bam":  [
       {
-        "name": "BamPartitioner",
+        "name": "ConsensusBamPartitioner",
         "arguments": {
           "refSeqDict": "/reference/38/GRCH/ref.dict",
           "partBed": "/bed/38/contiguous_unmasked_regions_50_parts"

@@ -1,8 +1,8 @@
 package com.atgenomix.seqslab.operators.partitioner
 
 import com.atgenomix.seqslab.operators.partitioner.BamPartitionerPart1Factory.BamPartitionerPart1
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import htsjdk.samtools.SAMFileHeader
 import org.apache.spark.sql.functions.{col, udf}
 import org.apache.spark.sql.{Dataset, Row}

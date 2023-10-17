@@ -1,9 +1,9 @@
 package com.atgenomix.seqslab.operators.loader
 
-import com.atgenomix.seqslab.piper.common.utils.HDFSUtil
-import com.atgenomix.seqslab.piper.plugin.api.loader._
-import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
 import com.atgenomix.seqslab.operators.loader.PartitionDataSource.PartitionDataLoader
+import com.atgenomix.seqslab.piper.common.utils.HDFSUtil
+import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.loader.{Loader, LoaderSupport, SupportsCopyToLocal, SupportsHadoopDFS, SupportsReadPartitions}
 import org.apache.hadoop.fs.Path
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
@@ -41,7 +41,7 @@ object PartitionDataSource {
       val fileName = getFileName(hadoopConfMap)
       val name = if (isFolder) s"part-${"%05d".format(partId)}-$fileName" else fileName
       val src: URI = new URI(srcInfo.getUrl).resolve(name)
-      HDFSUtil.downloader(src, Paths.get(path))(hadoopConfMap)
+      HDFSUtil.download(src, Paths.get(path))(hadoopConfMap)
       new util.ArrayList[Row]().iterator()
     }
 

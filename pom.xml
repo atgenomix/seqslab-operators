@@ -1,25 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>piper</artifactId>
+        <groupId>com.atgenomix.seqslab</groupId>
+        <version>6.1.6</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.atgenomix.seqslab</groupId>
-    <artifactId>operators</artifactId>
-    <version>1.0.0</version>
+    <artifactId>atgenomix-plugin</artifactId>
     <packaging>jar</packaging>
-
-    <properties>
-        <avro.version>1.8.2</avro.version>
-        <spark.version>3.3.0</spark.version>
-        <scala.version>2.12.15</scala.version>
-        <scala.binary.version>2.12</scala.binary.version>
-        <hadoop.version>3.3.3</hadoop.version>
-        <adam.version>0.33.0</adam.version>
-        <jackson.version>2.13.3</jackson.version>
-        <netty.version>4.1.74.Final</netty.version>
-        <jedis-mock.version>0.1.16</jedis-mock.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
+    <name>Atgenomix Plugin for Piper Engine</name>
 
     <repositories>
         <repository>
@@ -29,71 +21,14 @@
         </repository>
     </repositories>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <plugins>
             <!-- disable surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7</version>
                 <configuration>
                     <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.2</version>
-                <executions>
-                    <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
-                    <scalaVersion>${scala.version}</scalaVersion>
                 </configuration>
             </plugin>
             <!-- enable scalatest -->
@@ -104,12 +39,14 @@
                 <configuration>
                     <reportsDirectory>${project.build.directory}/scalatest-reports</reportsDirectory>
                     <junitxml>.</junitxml>
-                    <filereports>SeqslabOperatorsTestSuite.txt</filereports>
+                    <filereports>PiperEngineTestSuite.txt</filereports>
                     <!--
                         As explained here: http://stackoverflow.com/questions/1660441/java-flag-to-enable-extended-serialization-debugging-info
                         The second option allows us better debugging for serialization-based errors.
                     -->
-                    <argLine>-Xmx2048m -Dsun.io.serialization.extendedDebugInfo=true</argLine>
+                    <!--<argLine>-Xmx2048m -Dsun.io.serialization.extendedDebugInfo=true</argLine>
+                    <parallel>true</parallel>
+                    <threadCount>8</threadCount>-->
                     <stdout>F</stdout>
                 </configuration>
                 <executions>
@@ -136,111 +73,84 @@
     </build>
 
     <dependencies>
-        <!-- hadoop-common and hadoop-hdfs are used for getting data from hdfs -->
-        <!-- put hadoop-* before spark-core, otherwise hadoop-hdfs will use hadoop-client-api:3.3.2 to import HttpConfig which is shaded and cause class not found-->
+        <!-- adam -->
         <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-common</artifactId>
-            <version>${hadoop.version}</version>
-            <scope>test</scope>
+            <groupId>org.bdgenomics.adam</groupId>
+            <artifactId>adam-core-spark3_${scala.binary.version}</artifactId>
+            <version>${adam.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.github.samtools</groupId>
+                    <artifactId>htsjdk</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.esotericsoftware.kryo</groupId>
+                    <artifactId>kryo</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.seqdoop</groupId>
+                    <artifactId>hadoop-bam</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-hdfs</artifactId>
-            <version>${hadoop.version}</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- argument parser -->
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-minicluster</artifactId>
             <version>${hadoop.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.typesafe.play</groupId>
-            <artifactId>play-json_${scala.binary.version}</artifactId>
-            <version>2.9.1</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.scala-lang</groupId>
-                    <artifactId>scala-reflect</artifactId>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-reload4j</artifactId>
                 </exclusion>
             </exclusions>
-            <scope>provided</scope>
-        </dependency>
-        <!-- spark -->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_${scala.binary.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j-impl</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_${scala.binary.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-hive_${scala.binary.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-mllib_${scala.binary.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${avro.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>args4j</groupId>
-            <artifactId>args4j</artifactId>
-            <version>2.33</version>
         </dependency>
         <dependency>
             <groupId>com.atgenomix.seqslab</groupId>
             <artifactId>models</artifactId>
-            <version>DEV_java_11</version>
+            <version>2.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.atgenomix.seqslab</groupId>
             <artifactId>piper-common</artifactId>
-            <version>DEV_feature_support_java_11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.atgenomix.seqslab</groupId>
-            <artifactId>piper-operators</artifactId>
-            <version>DEV_feature_support_java_11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atgenomix.seqslab</groupId>
-            <artifactId>piper-engine</artifactId>
-            <version>DEV_feature_support_java_11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.delta</groupId>
-            <artifactId>delta-core_2.12</artifactId>
-            <version>2.1.1</version>
+            <version>6.1.6</version>
         </dependency>
         <dependency>
             <groupId>io.projectglow</groupId>
             <artifactId>glow-spark3_2.12</artifactId>
             <version>1.2.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.seqdoop</groupId>
+                    <artifactId>hadoop-bam</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.atgenomix.seqslab</groupId>
+            <artifactId>piper-engine</artifactId>
+            <version>6.1.6</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.delta</groupId>
+            <artifactId>delta-core_2.12</artifactId>
+            <version>${delta.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -260,19 +170,12 @@
             <version>4.3.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scala.binary.version}</artifactId>
-            <version>3.2.2</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Nexus Staging Repo</name>
-            <url>https://nexus-atgx.azurewebsites.net/repository/maven-releases/</url>
-        </repository>
-    </distributionManagement>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <jedis-mock.version>1.0.6</jedis-mock.version>
+    </properties>
+
 </project>

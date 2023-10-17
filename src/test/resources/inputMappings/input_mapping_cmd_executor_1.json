@@ -2,13 +2,16 @@
   "inputs": {
     "vcfDemo.vcfAnnotationTask.vcf1": "/test.vcf.gz",
     "vcfDemo.vcfAnnotationTask.vcf2": "/test.vcf",
+    "vcfDemo.vcfAnnotationTask.vcfNull": "File?",
     "vcfDemo.vcfAnnotationTask.ref": "/root/.vep"
   },
   "outputs": {
     "vcfDemo.vcfAnnotationTask.vcfOutput1": "variant_effect_output1.txt",
-    "vcfDemo.vcfAnnotationTask.vcfOutput2": "variant_effect_output2.txt"
+    "vcfDemo.vcfAnnotationTask.vcfOutput2": "variant_effect_output2.txt",
+    "vcfDemo.vcfAnnotationTask.outString": "test_string"
   },
   "datasets": {
+    "vcfDemo.vcfAnnotationTask.vcfNull": null,
     "vcfDemo.vcfAnnotationTask.vcfOutput1": {
       "id": "drs_default_id",
       "name": "variant_effect_output.txt",
@@ -145,6 +148,7 @@
     }
   },
   "tasks": {
+    "vcfDemo.vcfAnnotationTask.vcfNull": [ "RefLoader" ],
     "vcfDemo.vcfAnnotationTask.vcfOutput1": [],
     "vcfDemo.vcfAnnotationTask.vcfOutput2": [],
     "vcfDemo.vcfAnnotationTask.ref":  [ "RefLoader" ],
@@ -156,7 +160,6 @@
           "partBed": "/bed/19/chromosomes"
         }
       },
-      "VcfDataFrameTransformer",
       "VcfExecutor"
     ],
     "vcfDemo.vcfAnnotationTask.vcf2":  [
@@ -167,7 +170,7 @@
           "partBed": "/bed/19/chromosomes"
         }
       },
-      "VcfDataFrameTransformer",
-      "VcfExecutor"]
+      "VcfExecutor"
+    ]
   }
 }

@@ -1,0 +1,5 @@
+**/.DS_Store
+target/*
+work/*
+.idea/*
+dependency-reduced-pom.xml

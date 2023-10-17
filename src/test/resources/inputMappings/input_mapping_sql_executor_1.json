@@ -2,16 +2,16 @@
   "inputs": {
     "deltalake.table1": {
       "vcf": "/tmp/source.vcf",
-      "CHROM": "String",
-      "POS": 0,
-      "ID": "String",
-      "REF": "String",
-      "ALT": "String",
-      "QUAL": 0,
-      "FILTER": "String",
-      "INFO": "String",
-      "FORMAT": "String",
-      "HG001": "String"
+      "1:CHROM": "String",
+      "2:POS": 0,
+      "3:ID": "String",
+      "4:REF": "String",
+      "5:ALT": "String",
+      "6:QUAL": 0,
+      "7:FILTER": "String",
+      "8:INFO": "String",
+      "9:FORMAT": "String",
+      "10:HG001": "String"
     },
     "deltalake.table0": "/tmp/source.delta"
   },
@@ -24,8 +24,8 @@
       "created_time": "2021-10-30T01:45:31.004766Z",
       "checksums": [],
       "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
-      "file_type": "csv",
-      "size": 238196,
+      "file_type": "tsv",
+      "size": 2787810,
       "access_methods": [
         {
           "type": "hdfs",
@@ -46,7 +46,7 @@
       "checksums": [],
       "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
       "file_type": "delta",
-      "size": 238196,
+      "size": 135008,
       "access_methods": [
         {
           "type": "hdfs",
@@ -82,7 +82,7 @@
     }
   },
   "tasks": {
-    "deltalake.table0": [ "TableLocalizationExecutor"],
+    "deltalake.table0": [ "TableLocalizationExecutor" ],
     "deltalake.table1": [ "TableLocalizationExecutor" ],
     "deltalake.output": []
   }

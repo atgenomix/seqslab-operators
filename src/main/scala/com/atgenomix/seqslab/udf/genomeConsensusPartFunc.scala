@@ -6,11 +6,11 @@ import org.apache.spark.sql.api.java.UDF4
 import java.net.URL
 import scala.util.{Failure, Success, Try}
 
-class genomeConsensusPartFunc(bed: URL, dict: URL) extends UDF4[String, Int, String, Int, Array[Long]] {
+class genomeConsensusPartFunc(bed: URL, dict: URL) extends UDF4[String, Int, String, Int, Array[Int]] {
 
   val partitioner: GenomicPartitioner = GenomicPartitioner(Array(bed), dict)
 
-  override def call(chr: String, pos: Int, mateChr: String, matePos: Int): Array[Long] = {
+  override def call(chr: String, pos: Int, mateChr: String, matePos: Int): Array[Int] = {
     Try((pos, matePos)) match {
       case Success((pos, matePos)) =>
         val k1 = partitioner.getKeyValOrNoneInterval(chr, pos)
@@ -25,7 +25,7 @@ class genomeConsensusPartFunc(bed: URL, dict: URL) extends UDF4[String, Int, Str
               r + (part -> k)
             }
           }
-          .values
+          .keys
           .toArray
       case Failure(_) =>
         throw new Exception()

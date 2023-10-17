@@ -1,9 +1,8 @@
 package com.atgenomix.seqslab.tasks.cmd
 
-import com.atgenomix.seqslab.piper.engine.cli.{Args4j, PiedPiperArgs}
-import com.atgenomix.seqslab.piper.engine.sql.PiperMain
 import com.atgenomix.seqslab.SparkHadoopSessionBuilder
 import com.atgenomix.seqslab.SparkHadoopSessionBuilder.server
+import com.atgenomix.seqslab.piper.engine.sql.{Args4j, PiedPiperArgs, PiperMain}
 import org.apache.hadoop.fs.Path
 import org.scalatest.ParallelTestExecution
 import org.scalatest.flatspec.AnyFlatSpec

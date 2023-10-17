@@ -1,28 +1,27 @@
 package com.atgenomix.seqslab.operators.partitioner
 
 import com.atgenomix.seqslab.operators.partitioner.ConsensusBamPartitionerFactory.ConsensusBamPartitioner
-import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
-import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
-import com.atgenomix.seqslab.udf.genomeConsensusPartFunc
-import org.apache.spark.sql.catalyst.expressions.GenericRow
-import org.apache.spark.sql.types._
-import org.apache.spark.sql.{Dataset, Row, functions}
+import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
+import com.atgenomix.seqslab.udf.{genomeConsensusPartFunc, genomePartFunc}
+import org.apache.spark.sql.functions.{col, udf}
+import org.apache.spark.sql.types.{ArrayType, BinaryType, IntegerType, LongType, StructField, StructType}
+import org.apache.spark.sql.{Column, Dataset, Row, functions}
 
 import java.net.URL
 import scala.io.Source
-import scala.jdk.CollectionConverters.asScalaBufferConverter
 
 object ConsensusBamPartitionerFactory {
-  class ConsensusBamPartitioner(pluginCtx: PluginContext, operatorCtx: OperatorContext) extends Transformer {
+  class ConsensusBamPartitioner(pluginCtx: PluginContext, operatorCtx: OperatorContext) extends Transformer with SupportsPartitioner {
     private var refSeqDict: java.net.URL = null
     private var partBed: java.net.URL = null
     private val opName: String = "ConsensusGenericBamPartitioner"
-    private var udfName: String = null
+    private var udfPartition: String = null
+    private var udfOrder: String = null
 
     override def init(i: Int, i1: Int): Transformer = {
-      val ref = operatorCtx.get("BamConsensusPartitioner:refSeqDict")
-      val bed = operatorCtx.get("BamConsensusPartitioner:partBed")
+      val ref = operatorCtx.get("ConsensusBamPartitioner:refSeqDict")
+      val bed = operatorCtx.get("ConsensusBamPartitioner:partBed")
 
       this.refSeqDict = if (ref != null) {
         val rp = getClass.getResource(ref.asInstanceOf[String])
@@ -30,19 +29,24 @@ object ConsensusBamPartitionerFactory {
           rp
         else
           new URL(ref.asInstanceOf[String])
-      } else getClass.getResource("/reference/38/GRCH/ref.dict")
+      } else throw new IllegalArgumentException("ConsensusBamPartitioner:refSeqDict cannot be null")
       this.partBed = if (bed != null) {
         val rp = getClass.getResource(bed.asInstanceOf[String])
         if (rp != null)
           rp
         else
           new URL(bed.asInstanceOf[String])
-      } else getClass.getResource("/bed/38/contiguous_unmasked_regions_50_parts")
+      } else throw new IllegalArgumentException("ConsensusBamPartitioner:partBed cannot be null")
 
-      val udf = org.apache.spark.sql.functions.udf(new genomeConsensusPartFunc(this.partBed, this.refSeqDict), ArrayType(LongType))
-      this.udfName = f"$opName-${refSeqDict.getFile}-${partBed.getFile}"
-      pluginCtx.piper.spark.udf.register(this.udfName, udf)
+      val udf = org.apache.spark.sql.functions.udf(new genomeConsensusPartFunc(this.partBed, this.refSeqDict), ArrayType(IntegerType))
+      this.udfPartition = f"$opName-${refSeqDict.getFile}-${partBed.getFile}"
+      pluginCtx.piper.spark.udf.register(this.udfPartition, udf)
 
+      this.udfOrder = f"$opName-${refSeqDict.getFile}-${partBed.getFile}-sort"
+      pluginCtx.piper.spark.udf.register(
+        this.udfOrder,
+        org.apache.spark.sql.functions.udf(new genomePartFunc(this.partBed, this.refSeqDict), ArrayType(LongType))
+      )
       this
     }
 
@@ -62,29 +66,37 @@ object ConsensusBamPartitionerFactory {
 
     override def numPartitions(): Int = this.getPartitionNumFromBed(this.partBed)
 
-    override def call(t1: Dataset[Row]): Dataset[Row] = {
-      val partitioner = GenomicPartitioner(Array(this.partBed), this.refSeqDict)
+    override def expr(dataset: Dataset[Row]): Column = {
+      col("partId")
+    }
 
-      val keyColumn = functions.call_udf(this.udfName,
-        t1.col("referenceName"),
-        t1.col("alignmentStart"),
-        t1.col("mateReferenceName"),
-        t1.col("mateAlignmentStart")
-      )
-      val result = t1
-        .withColumn("key", keyColumn)
-        .select("key","raw")
-        .rdd
-        .flatMap(r => r.getList[Long](r.fieldIndex("key")).asScala.map(k => (k, r)))
-        .mapPartitions { _.map { case (k, v) =>
-          val r = v.get(v.fieldIndex("raw"))
-          k -> new GenericRow(Array(r)).asInstanceOf[Row]
-        }
-        }
-        .repartitionAndSortWithinPartitions(partitioner)
-        .mapPartitions(_.map(_._2))
-      val schema = StructType(Seq(StructField("raw", BinaryType)))
-      t1.sparkSession.createDataFrame(result, schema)
+    override def partitionId(objects: AnyRef*): Integer = {
+      objects.head.asInstanceOf[Int]
+    }
+
+    override def call(t1: Dataset[Row]): Dataset[Row] = {
+      t1
+        .withColumn(
+          "parts",
+          functions.call_udf(this.udfPartition,
+            t1.col("referenceName"),
+            t1.col("alignmentStart"),
+            t1.col("mateReferenceName"),
+            t1.col("mateAlignmentStart")
+          )
+        )
+        .withColumn(
+          "order",
+          functions.call_udf(this.udfOrder,
+            t1.col("referenceName"),
+            t1.col("alignmentStart")
+          )
+        )
+        .select(col("raw"), col("order"), functions.explode(col("parts")))
+        .withColumn("partId", col("col"))
+        .repartition(numPartitions(), col("partId"))
+        .sortWithinPartitions(col("order"))
+        .drop("parts", "order")
     }
 
     override def getOperatorContext: OperatorContext = operatorCtx

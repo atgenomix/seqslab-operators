@@ -1,0 +1,15 @@
+{
+  "inputs": {
+    "ampliseq.biosampleID": "biosample_yLLVFAMmjBY7xYV",
+    "ampliseq.phenopacketID": "phenopacket_Uw6umBQenjcLhYm",
+    "ampliseq.diseaseOntologyID": "https://cgmmgb-dev.seqslab.net/trs/v2/tools/62/versions/1.0.0/",
+    "ampliseq.graphqlEndpoint": "https://cgmmgb-api.seqslab.net/healthcare/v3/graphql/"
+  },
+  "outputs": {
+    "ampliseq.diagnosisID": "5566"
+  },
+  "datasets": {
+  },
+  "tasks": {
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "inputs": {
+    "CNVGermlineCohortWorkflow.MergeDelta.cohortEntityID": "gcnv_0.2.0_0727_1",
+    "CNVGermlineCohortWorkflow.MergeDelta.gcnvVariantsDelta": [
+      "FGS2280080_gcnvVariants.delta",
+      "FGS2280085_gcnvVariants.delta",
+      "FGS2280086_gcnvVariants.delta"
+    ]
+  },
+  "outputs": {
+    "CNVGermlineCohortWorkflow.MergeDelta.outFileMergedDelta": "gcnv_0.2.0_0727_1_gcnvVariants.delta"
+  },
+  "datasets": {
+    "CNVGermlineCohortWorkflow.MergeDelta.gcnvVariantsDelta": [
+      {
+        "id": "drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.TsvToDelta:0.outFileDelta_run_a7wSkJEfFq4X37m-3_AGGF",
+        "name": "FGS2280080_gcnvVariants",
+        "self_uri": "drs://staging.seqslab.net/drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.TsvToDelta:0.outFileDelta_run_a7wSkJEfFq4X37m-3_AGGF",
+        "file_type": "delta",
+        "mime_type": "application/octet-stream",
+        "metadata": {},
+        "size": 123369,
+        "tags": [
+          "outputs/gcnv_0.2.0_0727/CNVGermlineCohortWorkflow/TsvToDelta/outFileDelta"
+        ],
+        "created_time": "2023-07-28T03:11:24Z",
+        "updated_time": "<updatedTime>",
+        "version": "2023-07-28T03:12:38.955878Z",
+        "checksums": [],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/FGS2280080_gcnvVariants.delta",
+              "headers": {}
+            },
+            "region": "westus2",
+            "access_tier": "hot",
+            "id": 20015
+          }
+        ]
+      },
+      {
+        "id": "drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.TsvToDelta:1.outFileDelta_run_a7wSkJEfFq4X37m-3_JvlB",
+        "name": "FGS2280085_gcnvVariants",
+        "self_uri": "drs://staging.seqslab.net/drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.TsvToDelta:1.outFileDelta_run_a7wSkJEfFq4X37m-3_JvlB",
+        "file_type": "delta",
+        "mime_type": "application/octet-stream",
+        "metadata": {},
+        "size": 121949,
+        "tags": [
+          "outputs/gcnv_0.2.0_0727/CNVGermlineCohortWorkflow/TsvToDelta/outFileDelta"
+        ],
+        "created_time": "2023-07-28T03:11:51Z",
+        "updated_time": "<updatedTime>",
+        "checksums": [],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/FGS2280080_gcnvVariants.delta",
+              "headers": {}
+            },
+            "region": "westus2",
+            "access_tier": "hot",
+            "id": 20015
+          }
+        ]
+      },
+      {
+        "id": "drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.TsvToDelta:2.outFileDelta_run_a7wSkJEfFq4X37m-3_BOuK",
+        "name": "FGS2280086_gcnvVariants",
+        "self_uri": "drs://staging.seqslab.net/drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.TsvToDelta:2.outFileDelta_run_a7wSkJEfFq4X37m-3_BOuK",
+        "file_type": "delta",
+        "mime_type": "application/octet-stream",
+        "metadata": {},
+        "size": 122604,
+        "tags": [
+          "outputs/gcnv_0.2.0_0727/CNVGermlineCohortWorkflow/TsvToDelta/outFileDelta"
+        ],
+        "created_time": "2023-07-28T03:11:51Z",
+        "updated_time": "<updatedTime>",
+        "checksums": [],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/FGS2280080_gcnvVariants.delta",
+              "headers": {}
+            },
+            "region": "westus2",
+            "access_tier": "hot",
+            "id": 20015
+          }
+        ]
+      }
+    ],
+    "CNVGermlineCohortWorkflow.MergeDelta.outFileMergedDelta": {
+      "id": "drs_gcnv_0.2.0_0727:CNVGermlineCohortWorkflow.MergeDelta:x.outFileMergedDelta_run_a7wSkJEfFq4X37m-3_d6hq",
+      "name": "gcnv_0.2.0_0727_1_gcnvVariants",
+      "file_type": "delta",
+      "mime_type": "application/octet-stream",
+      "size": 10,
+      "tags": [
+        "outputs/gcnv_0.2.0_0727/CNVGermlineCohortWorkflow/MergeDelta/outFileMergedDelta"
+      ],
+      "created_time": "2023-07-28T03:12:42",
+      "updated_time": "2023-07-28T03:12:42",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/sql_executor_test/outputs/test7",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "CNVGermlineCohortWorkflow.MergeDelta.outFileMergedDelta": [
+      "SqlDefaultCollector",
+      {
+        "name": "DeltaTablePartitionWriter",
+        "arguments": {
+          "partitionBy": [
+            "Samples_ID"
+          ]
+        }
+      }
+    ],
+    "CNVGermlineCohortWorkflow.MergeDelta.gcnvVariantsDelta": [
+      "TableLocalizationExecutor"
+    ]
+  }
+}

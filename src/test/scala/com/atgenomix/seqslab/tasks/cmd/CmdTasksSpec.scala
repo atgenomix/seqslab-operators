@@ -1,15 +1,15 @@
 package com.atgenomix.seqslab.tasks.cmd
 
 
-import com.atgenomix.seqslab.piper.common.utils.HDFSUtil.getHadoopFileSystem
-import com.atgenomix.seqslab.piper.engine.cli.{Args4j, PiedPiperArgs}
-import com.atgenomix.seqslab.piper.engine.sql.PiperMain
 import com.atgenomix.seqslab.SparkHadoopSessionBuilder
-import com.atgenomix.seqslab.SparkHadoopSessionBuilder.server
+import com.atgenomix.seqslab.SparkHadoopSessionBuilder.{jedis, server}
+import com.atgenomix.seqslab.piper.common.utils.HDFSUtil.getHadoopFileSystem
+import com.atgenomix.seqslab.piper.engine.sql.{Args4j, PiedPiperArgs, PiperMain}
+import models.SeqslabPipeline
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.Path
-import org.scalatest.ParallelTestExecution
 import org.scalatest.flatspec.AnyFlatSpec
+import play.api.libs.json.Json
 
 import java.io.File
 import java.net.URI
@@ -17,7 +17,7 @@ import scala.io.Source
 import scala.jdk.CollectionConverters.mapAsScalaMapConverter
 
 
-class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with ParallelTestExecution {
+class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder {
 
   override def hdfsPort: Int = 9000
 
@@ -46,6 +46,36 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     *   }
     * }
     */
+  it should "Engine should successfully run task without file localization" in {
+
+    val filePath = getClass.getResource("/inputMappings/input_mapping_cmd_localization_free.json").getPath
+    val args = Array(
+      "--workflow-req-src", "File",
+      "--task-fqn", "Demo.CreateInterpretation:x",
+      "--file-path", filePath,
+      "--script-path", getClass.getResource("/script/testCmdExecutorLocalizationFree.sh").getPath,
+      "--workflow-id", "run_cmd_test1",
+      "--org", "cus_OqsOKDdinNaWW7s",
+      "--tenant", "tenant",
+      "--region", "westus2",
+      "--cloud", "azure",
+      "--user", "usr_gNGAlr1m0EYMbEx",
+      "--fs-root", "hdfs://localhost:9000/wes/plugin_test/cmd_executor_localization_free/",
+      "--task-root", "hdfs://localhost:9000/plugin_test/cmd_executor_localization_free/outputs/",
+      "--redis-url", server.getHost,
+      "--redis-port", server.getBindPort.toString,
+      "--redis-key", "test-1",
+      "--redis-db", "0",
+      "--dbg"
+    )
+    try {
+      val hadoopMap = _spark.sparkContext.hadoopConfiguration.getPropsWithPrefix("").asScala.toMap
+      new PiperMain(Args4j[PiedPiperArgs](args)).run()(_spark, hadoopMap)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+  }
+
   it should "Engine should successfully execute with input_mapping_cmd_executor_1.json and script.sh" in {
 
     val filePath = getClass.getResource("/inputMappings/input_mapping_cmd_executor_1.json").getPath
@@ -74,8 +104,42 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     } catch {
       case e: Exception => e.printStackTrace()
     }
+
     assert(_hadoopFS.listStatus(new Path("hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/variant_effect_output1.txt")).length == 23)
     assert(_hadoopFS.listStatus(new Path("hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/variant_effect_output2.txt")).length == 23)
+  }
+
+  it should "Engine should successfully execute with input_mapping_cmd_executor_bed.json and script.sh" in {
+
+    val filePath = getClass.getResource("/inputMappings/input_mapping_cmd_executor_bed.json").getPath
+    val scriptPath = getClass.getResource("/script/testCmdExecutorBed.sh").getPath
+    val args = Array(
+      "--workflow-req-src", "File",
+      "--task-fqn", "vcfDemo.vcfAnnotationTask:x",
+      "--file-path", filePath,
+      "--script-path", scriptPath,
+      "--workflow-id", "run_cmd_test1",
+      "--org", "cus_OqsOKDdinNaWW7s",
+      "--tenant", "tenant",
+      "--region", "westus2",
+      "--cloud", "azure",
+      "--user", "usr_gNGAlr1m0EYMbEx",
+      "--fs-root", "hdfs://localhost:9000/wes/plugin_test/cmd_executor_test/",
+      "--task-root", "hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/",
+      "--redis-url", server.getHost,
+      "--redis-port", server.getBindPort.toString,
+      "--redis-key", "test-1",
+      "--redis-db", "0",
+      "--dbg"
+    )
+    try {
+      val hadoopMap = _spark.sparkContext.hadoopConfiguration.getPropsWithPrefix("").asScala.toMap
+      new PiperMain(Args4j[PiedPiperArgs](args)).run()(_spark, hadoopMap)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+    assert(_hadoopFS.listStatus(new Path("hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/variant_effect_output155.bed")).length == 23)
+    assert(_hadoopFS.listStatus(new Path("hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/variant_effect_output3101.bed")).length == 23)
   }
 
   it should "Repartition BAM file to 155 partitions" in {
@@ -277,6 +341,7 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     } catch {
       case e: Exception => e.printStackTrace()
     }
+    Thread.sleep(1000)
     val files = _hadoopFS.listStatus(new Path(s"hdfs://localhost:9000/plugin_test/cmd_executor_test_${udfName}/outputs/output.bam"))
     assert(files.length == partNum)
   }
@@ -331,6 +396,25 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     }
   }
 
+  /** Case to partition vcf file with provided hdfs Path
+   * task BaseRecalibrator {
+   *   input {
+   *     Array[String] recalibration_report_filename
+   *     ...
+   *   }
+   *   command <<<
+   *     set -e -o pipefail
+   *     ls -l ~{write_lines(recalibration_report_filename)}
+   *     echo ~{sep=" " SampleNames}
+   *     echo ~{sep='--known-sites' known_indels_sites_indices}
+   *     cp ~{input_bam_index[0]} ~{recalibration_report_filename[0]}
+   *     cp ~{input_bam_index[1]} ~{recalibration_report_filename[1]}
+   *   >>>
+   *   output {
+   *     ...
+   *   }
+   * }
+   */
   it should "successfully localize Array[File] with RefLoader settings" in {
     val filePath = getClass.getResource(s"/inputMappings/input_mapping_cmd_executor_array_file.json").getPath
     val scriptPath = getClass.getResource(s"/script/testCmdExecutorArrayFile.sh").getPath
@@ -359,13 +443,14 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     } catch {
       case e: Exception => e.printStackTrace()
     }
+    Thread.sleep(1000)
     val files0 = _hadoopFS.listStatus(new Path(s"hdfs://localhost:9000/plugin_test/cmd_executor_test_array_file/outputs/call-BaseRecalibrator/NA12878.hg19.recal_data0.csv/"))
     val files1 = _hadoopFS.listStatus(new Path(s"hdfs://localhost:9000/plugin_test/cmd_executor_test_array_file/outputs/call-BaseRecalibrator/NA12878.hg19.recal_data1.csv/"))
     assert(files0.length == 1)
     assert(files1.length == 1)
   }
 
-  it should "successfully localize Array[File] with SinleNodeDataLoader settings" in {
+  it should "successfully localize Array[File] with SingleNodeDataLoader settings" in {
     val filePath = getClass.getResource("/inputMappings/input_mapping_cmd_executor_SingleNodeDataLoader.json").getPath
     val scriptPath = getClass.getResource("/script/testCmdExecutorSingleNodeDataLoader.sh").getPath
     val args = Array(
@@ -393,6 +478,7 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     } catch {
       case e: Exception => e.printStackTrace()
     }
+    Thread.sleep(1000)
     val dst = "hdfs://localhost:9000/plugin_test/cmd_executor_test/outputs/SingleNodeDataLoader/"
     val files = _hadoopFS.listStatus(new Path(dst))
     assert(files.length == 1)
@@ -402,5 +488,38 @@ class CmdTasksSpec extends AnyFlatSpec with SparkHadoopSessionBuilder with Paral
     val fileContents = f.getLines.mkString
     f.close()
     assert(fileContents == "part-0.vcfpart-1.vcf" )
+  }
+
+  it should "Engine should successfully execute with input_mapping_cmd_executor_std_function.json and script.sh" in {
+
+    val filePath = getClass.getResource("/inputMappings/input_mapping_cmd_executor_std_function.json").getPath
+    val args = Array(
+      "--workflow-req-src", "File",
+      "--task-fqn", "vcfDemo.vcfAnnotationTask:x",
+      "--file-path", filePath,
+      "--script-path", getClass.getResource("/script/testCmdExecutorStdFunc.sh").getPath,
+      "--workflow-id", "run_cmd_test11",
+      "--org", "cus_OqsOKDdinNaWW7s",
+      "--tenant", "tenant",
+      "--region", "westus2",
+      "--cloud", "azure",
+      "--user", "usr_gNGAlr1m0EYMbEx",
+      "--fs-root", "hdfs://localhost:9000/wes/plugin_test/std_func_cmd_executor_test/",
+      "--task-root", "hdfs://localhost:9000/plugin_test/std_func_cmd_executor_test/outputs/",
+      "--redis-url", server.getHost,
+      "--redis-port", server.getBindPort.toString,
+      "--redis-key", "test-11",
+      "--redis-db", "0",
+      "--dbg"
+    )
+    try {
+      val hadoopMap = _spark.sparkContext.hadoopConfiguration.getPropsWithPrefix("").asScala.toMap
+      new PiperMain(Args4j[PiedPiperArgs](args)).run()(_spark, hadoopMap)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+
+    val pipeline = Json.parse(jedis.get("test-11:output_mapping:vcfDemo.vcfAnnotationTask:x")).validate[SeqslabPipeline].get
+    assert(pipeline.outputs("vcfDemo.vcfAnnotationTask.stdFuncOutput1").getInteger == 23)
   }
 }

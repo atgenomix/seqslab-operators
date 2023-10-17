@@ -1,9 +1,10 @@
 package com.atgenomix.seqslab.operators.loader
 
-import com.atgenomix.seqslab.piper.common.utils.{AzureUtil, HDFSUtil}
-import com.atgenomix.seqslab.piper.plugin.api.loader.{Loader, LoaderSupport, SupportsCopyToLocal, SupportsHadoopDFS}
-import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
 import com.atgenomix.seqslab.operators.loader.RefDataSource.RefLoader
+import com.atgenomix.seqslab.piper.common.utils.{AzureUtil, HDFSUtil, HttpUtil}
+import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
+import com.atgenomix.seqslab.piper.plugin.api.loader.{Loader, LoaderSupport, SupportsCopyToLocal, SupportsHadoopDFS}
+import models.SeqslabAny
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.StructType
 
@@ -37,17 +38,27 @@ object RefDataSource {
     override def call(): util.Iterator[Row] = {
       val uri = new URI(srcInfo.getUrl)
       val p = Paths.get(path)
-
+      val auth = srcInfo.asScala.get("headers") match {
+        case Some(headers) =>
+          headers.asInstanceOf[Map[String, SeqslabAny]].get("Authorization") match {
+            case Some(any) => any.o.map(f => f.toString)
+            case None => None
+          }
+        case None => None
+      }
       srcInfo.getType match {
-        case "abfs" | "abfss" =>
+        case "abfs" | "abfss" if auth.isDefined =>
           val fs = HDFSUtil.getHadoopFileSystem(uri, hadoopConfMap)
           val isDir = HDFSUtil.isDir(uri)(fs)
-          val token = Option(srcInfo.get("Authorization")).map(_.asInstanceOf[String])
-          AzureUtil.downloader(uri, p, token, isDir)
+          AzureUtil.download(uri, p, auth, isDir)
+        case "http" | "https" if uri.getHost.endsWith("core.windows.net") =>
+          AzureUtil.download(uri, p, None, isDir = false)
+        case "http" | "https" =>
+          HttpUtil.download(srcInfo.getUrl, path, auth)
+        case "file" | _ =>
+          HDFSUtil.download(uri, p)(hadoopConfMap)
         case "jdbc" =>
           ???
-        case "file" | _ =>
-          HDFSUtil.downloader(uri, p)(hadoopConfMap)
       }
       Iterator.empty.asJava
     }

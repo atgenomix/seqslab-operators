@@ -16,19 +16,20 @@
 
 package com.atgenomix.seqslab
 
-import com.atgenomix.seqslab.piper.plugin.api._
+import com.atgenomix.seqslab.operators.collector.BamCollectorFactory
+import com.atgenomix.seqslab.operators.executor.{BamExecutorFactory, BedExecutorFactory, CsvExecutorFactory, FastqExecutorFactory, SqlExecutorFactory, VcfExecutorFactory}
+import com.atgenomix.seqslab.operators.loader.{CsvInMemoryDataSource, PartitionDataSource, RefDataSource, SingleNodeDataSource}
+import com.atgenomix.seqslab.operators.partitioner.{BamPartitionerFactory, BamPartitionerPart1Factory, BamPartitionerPart1UnmapFactory, BedPartitionerFactory, ConsensusBamPartitionerFactory, FastqPartitionerFactory, VcfPartitionerFactory}
+import com.atgenomix.seqslab.operators.transformer.{IndexTransformerFactory, VcfGlowTransformerFactory}
+import com.atgenomix.seqslab.operators.writer.{CsvWriterFactory, DeltaTablePartitionWriterFactory}
+import com.atgenomix.seqslab.piper.engine.actor.Utils.SqlDefaultCollectorFactory
 import com.atgenomix.seqslab.piper.plugin.api.collector.CollectorSupport
 import com.atgenomix.seqslab.piper.plugin.api.executor.ExecutorSupport
 import com.atgenomix.seqslab.piper.plugin.api.loader.LoaderSupport
 import com.atgenomix.seqslab.piper.plugin.api.transformer.TransformerSupport
 import com.atgenomix.seqslab.piper.plugin.api.writer.WriterSupport
-import com.atgenomix.seqslab.operators.collector.BamCollectorFactory
-import com.atgenomix.seqslab.operators.executor._
-import com.atgenomix.seqslab.operators.loader._
-import com.atgenomix.seqslab.operators.partitioner._
-import com.atgenomix.seqslab.operators.transformer.{VcfDataFrameTransformerFactory, VcfGlowTransformerFactory}
-import com.atgenomix.seqslab.operators.writer.GeneralWriterFactory
-import com.atgenomix.seqslab.udf._
+import com.atgenomix.seqslab.piper.plugin.api.{PiperContext, PiperPlugin, PluginContext}
+import com.atgenomix.seqslab.udf.{GRCh38Part1, GRCh38Part155, GRCh38Part23, GRCh38Part3101, GRCh38Part50, GRCh38Part50Consensus, Hg19Chr20Part45, Hg19Part1, Hg19Part155, Hg19Part155Consensus, Hg19Part23, Hg19Part3109, Hg19Part3109Unpadded, Hg19Part77}
 import io.projectglow.Glow
 import io.projectglow.sql.optimizer.{ReplaceExpressionsRule, ResolveAggregateFunctionsRule, ResolveExpandStructRule, ResolveGenotypeFields}
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
@@ -40,7 +41,7 @@ import java.util
 import scala.jdk.CollectionConverters.{mapAsJavaMapConverter, seqAsJavaListConverter}
 
 
-class OperatorPlugin extends PiperPlugin {
+class AtgenomixPiperPlugin extends PiperPlugin {
 
   override def init(context: PiperContext): PluginContext = {
     Glow.register(context.spark, false)
@@ -49,46 +50,49 @@ class OperatorPlugin extends PiperPlugin {
 
   override def registerLoaders(): java.util.Map[String, LoaderSupport] = {
     Map(
-      "RefLoader" -> new RefDataSource().asInstanceOf[LoaderSupport],
+      "CsvInMemoryLoader" -> new CsvInMemoryDataSource().asInstanceOf[LoaderSupport],
       "PartitionDataLoader" -> new PartitionDataSource().asInstanceOf[LoaderSupport],
+      "RefLoader" -> new RefDataSource().asInstanceOf[LoaderSupport],
       "SingleNodeDataLoader" -> new SingleNodeDataSource().asInstanceOf[LoaderSupport],
     ).asJava
   }
 
   override def registerExecutors(): java.util.Map[String, ExecutorSupport] = {
     Map(
-      "BamExecutor" -> new BamExecutorFactory(),
-      "CsvExecutor" -> new CsvExecutorFactory(),
-      "FastqExecutor" -> new FastqExecutorFactory(),
-      "VcfExecutor" -> new VcfExecutorFactory(),
-      "TableLocalizationExecutor" -> new SqlExecutorFactory()
+      "BamExecutor" -> new BamExecutorFactory().asInstanceOf[ExecutorSupport],
+      "CsvExecutor" -> new CsvExecutorFactory().asInstanceOf[ExecutorSupport],
+      "FastqExecutor" -> new FastqExecutorFactory().asInstanceOf[ExecutorSupport],
+      "VcfExecutor" -> new VcfExecutorFactory().asInstanceOf[ExecutorSupport],
+      "BedExecutor" -> new BedExecutorFactory().asInstanceOf[ExecutorSupport],
+      "TableLocalizationExecutor" -> new SqlExecutorFactory().asInstanceOf[ExecutorSupport]
     ).asJava
   }
 
   override def registerTransformers(): java.util.Map[String, TransformerSupport] = {
     Map(
-      "FastqPartitioner" -> new FastqPartitionerFactory(),
-      "BamPartitionerPart1" -> new BamPartitionerPart1Factory(),
-      "BamPartitionerPart1Unmap" -> new BamPartitionerPart1UnmapFactory(),
-      "VcfDataFrameTransformer" -> new VcfDataFrameTransformerFactory(),
-      "VcfGlowTransformer" -> new VcfGlowTransformerFactory(),
-      "BamPartitioner" -> new BamPartitionerFactory(),
-      "ConsensusBamPartitioner" -> new ConsensusBamPartitionerFactory(),
-      "VcfPartitioner" -> new VcfPartitionerFactory(),
-      "BedPartitioner" -> new BedPartitionerFactory()
+      "FastqPartitioner" -> new FastqPartitionerFactory().asInstanceOf[TransformerSupport],
+      "BamPartitionerPart1" -> new BamPartitionerPart1Factory().asInstanceOf[TransformerSupport],
+      "BamPartitionerPart1Unmap" -> new BamPartitionerPart1UnmapFactory().asInstanceOf[TransformerSupport],
+      "BamPartitioner" -> new BamPartitionerFactory().asInstanceOf[TransformerSupport],
+      "ConsensusBamPartitioner" -> new ConsensusBamPartitionerFactory().asInstanceOf[TransformerSupport],
+      "VcfPartitioner" -> new VcfPartitionerFactory().asInstanceOf[TransformerSupport],
+      "BedPartitioner" -> new BedPartitionerFactory().asInstanceOf[TransformerSupport],
+      "VcfGlowTransformer" -> new VcfGlowTransformerFactory().asInstanceOf[TransformerSupport],
+      "IndexTransformer" -> new IndexTransformerFactory().asInstanceOf[TransformerSupport]
     ).asJava
   }
 
   override def registerCollectors(): util.Map[String, CollectorSupport] = {
     Map(
       "BamCollector" -> new BamCollectorFactory().asInstanceOf[CollectorSupport],
-      // "PhenopacketCollector" -> new PhenopacketCollectorFactory().asInstanceOf[CollectorSupport]
+      "SqlDefaultCollector" -> new SqlDefaultCollectorFactory().asInstanceOf[CollectorSupport]
     ).asJava
   }
 
   override def registerWriters(): util.Map[String, WriterSupport] = {
     Map(
-      "GeneralWriter" -> new GeneralWriterFactory().asInstanceOf[WriterSupport]
+      "DeltaTablePartitionWriter" -> new DeltaTablePartitionWriterFactory().asInstanceOf[WriterSupport],
+      "CsvWriter" -> new CsvWriterFactory().asInstanceOf[WriterSupport]
     ).asJava
   }
 

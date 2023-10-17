@@ -62,7 +62,7 @@
     "bamDemo.bamPartitionTask.bamOutput": [],
     "bamDemo.bamPartitionTask.bam":  [
       {
-        "name": "ConsensusBamPartitioner",
+        "name": "BamPartitioner",
         "arguments": {
           "refSeqDict": "https://seqslabbundles.blob.core.windows.net/static/reference/38/GRCH/ref.dict",
           "partBed": "https://seqslabbundles.blob.core.windows.net/static/system/bed/38/contiguous_unmasked_regions_50_parts"
