@@ -16,19 +16,22 @@
 
 package com.atgenomix.seqslab
 
+import com.atgenomix.seqslab.piper.common.utils.DeltaTableUtil
 import com.atgenomix.seqslab.HDFSCluster.startHDFS
 import com.atgenomix.seqslab.SparkHadoopSessionBuilder.{startRedis, stopRedis}
 import com.github.fppt.jedismock.RedisServer
+import io.delta.tables.DeltaTable
 import org.apache.commons.io.FileUtils
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.FileSystem
 import org.apache.spark.sql.SparkSession
-import org.scalatest.{BeforeAndAfterAll, Suite}
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Suite}
 import org.stringtemplate.v4.ST
 import redis.clients.jedis.Jedis
 
 import java.io.File
 import java.nio.file.{Files, Path}
+import java.sql.Timestamp
 import scala.util.matching.Regex
 
 
@@ -69,6 +72,7 @@ object SparkHadoopSessionBuilder {
       if (spark == null) {
         _hadoopFS
         spark = SparkSession.builder()
+          .enableHiveSupport()
           .master("local[*]")
           .appName(this.getClass.getSimpleName)
           .config("spark.network.timeout", "1800s") // Default timeout for all network interactions.
@@ -79,6 +83,7 @@ object SparkHadoopSessionBuilder {
           .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
           .config("spark.databricks.delta.schema.autoMerge.enabled", "true")
           .config("spark.piper.plugins", "com.atgenomix.seqslab.AtgenomixPiperPlugin")
+          .config("spark.seqslab.kernel.hive.udf.register.enabled", "true")
           .getOrCreate()
       }
       spark
@@ -109,12 +114,12 @@ object SparkHadoopSessionBuilder {
   }
 }
 
-trait SparkHadoopSessionBuilder extends BeforeAndAfterAll with HDFSCluster {
+trait SparkHadoopSessionBuilder extends BeforeAndAfterAll with BeforeAndAfterEach with HDFSCluster {
   this: Suite =>
 
   def _hadoopFS: FileSystem = SparkHadoopSessionBuilder._hadoopFS
 
-  def _spark: SparkSession = SparkHadoopSessionBuilder._spark
+  var _spark: SparkSession = _
 
   override def beforeAll(): Unit = {
     startRedis()
@@ -132,6 +137,10 @@ trait SparkHadoopSessionBuilder extends BeforeAndAfterAll with HDFSCluster {
       deleteLocalFiles()
       deleteHiveMetastore()
     }
+  }
+
+  override def beforeEach(): Unit = {
+    _spark = SparkHadoopSessionBuilder._spark
   }
 
   def deleteLocalFiles(): Unit = {
@@ -169,7 +178,7 @@ trait SparkHadoopSessionBuilder extends BeforeAndAfterAll with HDFSCluster {
       FileUtils.forceDelete(metastore)
   }
 
-  def getInputMappingPath(resourcePath: String, properties: Map[String, String]): java.nio.file.Path = {
+  def getInputMappingPath(resourcePath: String, properties: Map[String, String] = Map.empty): java.nio.file.Path = {
     val inputStream = getClass.getResourceAsStream(resourcePath)
     val content = scala.io.Source.fromInputStream(inputStream).mkString
     val fileTemplate = new ST(content)
@@ -177,5 +186,15 @@ trait SparkHadoopSessionBuilder extends BeforeAndAfterAll with HDFSCluster {
     val path = Files.createTempFile("", "")
     Files.write(path, fileTemplate.render().getBytes)
     path
+  }
+
+  def getTimeStampFromDeltaTable(table: String, version: Option[String] = None): Map[String, String] = {
+    val history = DeltaTable.forPath(_spark, table).history()
+    val df = version match {
+      case Some(version) => history.filter(s"version == '$version'")
+      case None => history
+    }
+    val timestamp = df.first().getAs[Timestamp]("timestamp").toString
+    Map("updatedTime" -> DeltaTableUtil.history2DrsZSuffixTimeFormat(timestamp))
   }
 }
