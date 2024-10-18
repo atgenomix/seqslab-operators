@@ -1,0 +1,232 @@
+{
+  "inputs": {
+    "PlinkBedReading.Task1.bgen": "TWB2.hg38.QC.bgen",
+    "PlinkBedReading.Task1.covarFile": "example/covariates.txt.gz",
+    "PlinkBedReading.Task1.phenoFile": "example/phenotype_bin.txt.gz",
+    "PlinkBedReading.Task1.removeFile": "example/fid_iid_to_remove.txt"
+  },
+  "outputs": {
+    "PlinkBedReading.Task1.masterFile": "fit_parallel.master",
+    "PlinkBedReading.Task1.snpList": "fit_parallel_job1.snplist",
+    "PlinkBedReading.Task1.l0_Y1": "fit_parallel_job1_l0_Y1",
+    "PlinkBedReading.Task1.l0_Y2": "fit_parallel_job1_l0_Y2"
+  },
+  "datasets": {
+    "PlinkBedReading.Task1.bgen": {
+      "id": "drs_LJwYGSHSjWhkKRx",
+      "name": "example_3chr",
+      "self_uri": "drs://127.0.0.1/drs_LJwYGSHSjWhkKRx",
+      "file_type": "bgen",
+      "mime_type": "application/octet-stream",
+      "metadata": {},
+      "size": 304728,
+      "created_time": "2023-08-06T00:11:49.068000Z",
+      "updated_time": "2023-08-06T00:11:49.068000Z",
+      "version": "2023-08-06T00:11:49.355086Z",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/regenie/example_3chr",
+            "headers": {}
+          },
+          "region": "unknown",
+          "access_tier": "hot",
+          "id": 309136
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.covarFile": {
+      "id": "drs_LJwYGSHSjWhkKRx",
+      "name": "covariates.txt",
+      "self_uri": "drs://127.0.0.1/drs_LJwYGSHSjWhkKRx",
+      "file_type": "gz",
+      "mime_type": "application/octet-stream",
+      "metadata": {},
+      "size": 304728,
+      "created_time": "2023-08-06T00:11:49.068000Z",
+      "updated_time": "2023-08-06T00:11:49.068000Z",
+      "version": "2023-08-06T00:11:49.355086Z",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/regenie/covariates.txt.gz",
+            "headers": {}
+          },
+          "region": "unknown",
+          "access_tier": "hot",
+          "id": 309136
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.phenoFile": {
+      "id": "drs_LJwYGSHSjWhkKRx",
+      "name": "phenotype_bin.txt",
+      "self_uri": "drs://127.0.0.1/drs_LJwYGSHSjWhkKRx",
+      "file_type": "gz",
+      "mime_type": "application/octet-stream",
+      "metadata": {},
+      "size": 304728,
+      "created_time": "2023-08-06T00:11:49.068000Z",
+      "updated_time": "2023-08-06T00:11:49.068000Z",
+      "version": "2023-08-06T00:11:49.355086Z",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/regenie/phenotype_bin.txt.gz",
+            "headers": {}
+          },
+          "region": "unknown",
+          "access_tier": "hot",
+          "id": 309136
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.removeFile": {
+      "id": "drs_LJwYGSHSjWhkKRx",
+      "name": "fid_iid_to_remove",
+      "self_uri": "drs://127.0.0.1/drs_LJwYGSHSjWhkKRx",
+      "file_type": "txt",
+      "mime_type": "application/octet-stream",
+      "metadata": {},
+      "size": 304728,
+      "created_time": "2023-08-06T00:11:49.068000Z",
+      "updated_time": "2023-08-06T00:11:49.068000Z",
+      "version": "2023-08-06T00:11:49.355086Z",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/regenie/fid_iid_to_remove.txt",
+            "headers": {}
+          },
+          "region": "unknown",
+          "access_tier": "hot",
+          "id": 309136
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.masterFile": {
+      "id": "drs_run_name:PlinkBedReading.Task1:x.outFile_run_KtbPP0fhEGRZCyO_Yxba",
+      "name": "fit_parallel",
+      "file_type": "master",
+      "mime_type": "application/octet-stream",
+      "size": 10,
+      "created_time": "2023-08-07T00:56:29",
+      "updated_time": "2023-08-07T00:56:29",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/bgen_cmd_executor_test/outputs/fit_bin_parallel.master/",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.snpList": {
+      "id": "drs_run_name:PlinkBedReading.Task1:x.outFile_run_KtbPP0fhEGRZCyO_Yxba",
+      "name": "fit_parallel_job",
+      "file_type": "snplist",
+      "mime_type": "application/octet-stream",
+      "size": 10,
+      "created_time": "2023-08-07T00:56:29",
+      "updated_time": "2023-08-07T00:56:29",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/bgen_cmd_executor_test/outputs/fit_bin_parallel_job.snplist",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.l0_Y1": {
+      "id": "drs_run_name:PlinkBedReading.Task1:x.outFile_run_KtbPP0fhEGRZCyO_Yxba",
+      "name": "fit_parallel_job1_l0_Y1",
+      "file_type": "txt",
+      "mime_type": "application/octet-stream",
+      "size": 10,
+      "created_time": "2023-08-07T00:56:29",
+      "updated_time": "2023-08-07T00:56:29",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/bgen_cmd_executor_test/outputs/fit_bin_parallel_job1_l0_Y1",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "PlinkBedReading.Task1.l0_Y2": {
+      "id": "drs_run_name:PlinkBedReading.Task1:x.outFile_run_KtbPP0fhEGRZCyO_Yxba",
+      "name": "fit_parallel_job1_l0_Y2",
+      "file_type": "txt",
+      "mime_type": "application/octet-stream",
+      "size": 10,
+      "created_time": "2023-08-07T00:56:29",
+      "updated_time": "2023-08-07T00:56:29",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/bgen_cmd_executor_test/outputs/fit_bin_parallel_job1_l0_Y2",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "PlinkBedReading.Task1.bgen": [
+      {
+        "name": "BgenInMemoryLoader",
+        "arguments": {
+          "useBgenIndex": "true",
+          "emitHardCalls": "true",
+          "hardCallThreshold": "0.9"
+        }
+      },
+      {
+        "name": "RegenieBgenPartitioner",
+        "arguments": {
+          "include": "",
+          "exclude": "hdfs://localhost:9000/inputs/regenie/snplist_rm.txt",
+          "bsize": "100",
+          "numJobs": 2147483647
+        }
+      },
+      {
+        "name": "RegenieBgenExecutor",
+        "arguments": {
+          "masterSnpList": "true",
+          "numVariants": "true"
+        }
+      }
+    ],
+    "PlinkBedReading.Task1.covarFile": ["RefLoader"],
+    "PlinkBedReading.Task1.phenoFile": ["RefLoader"],
+    "PlinkBedReading.Task1.removeFile": ["RefLoader"],
+    "PlinkBedReading.Task1.masterFile": ["RegenieMasterCollector", "RegenieMasterWriter"]
+  }
+}

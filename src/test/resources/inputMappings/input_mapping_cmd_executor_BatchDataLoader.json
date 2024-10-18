@@ -1,0 +1,145 @@
+{
+  "inputs": {
+    "scatterDemo.bedPartitionTask.ref": "/root/.vep",
+    "scatterDemo.bedPartitionTask.bed": [
+      "test.bed",
+      "test3101.bed"
+    ]
+  },
+  "outputs": {
+  },
+  "datasets": {
+    "scatterDemo.bedPartitionTask.bed": [
+      {
+        "id": "drs_aM8uEpsvfy4DMhT",
+        "name": "test.bed",
+        "self_uri": "drs://dev-api.seqslab.net/drs_aM8uEpsvfy4DMhT",
+        "file_type": "bed",
+        "mime_type": "plain/txt",
+        "size": 29814,
+        "tags": [],
+        "created_time": "2022-09-28T03:44:41.506377Z",
+        "updated_time": "2022-09-28T03:44:41.506377Z",
+        "checksums": [
+          {
+            "checksum": "dc292c7e89bb7dceda838c94be1e297ba9304f9e5495ee51cc6ef7129b2be52c",
+            "type": "sha256"
+          }
+        ],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/datasetBed/contiguous_unmasked_regions_155_parts",
+              "headers": {}
+            },
+            "region": "westus3",
+            "access_tier": "hot"
+          }
+        ]
+      },
+      {
+        "id": "drs_aM8uEpsvfy4DMhT",
+        "name": "test.bed",
+        "self_uri": "drs://dev-api.seqslab.net/drs_aM8uEpsvfy4DMhT",
+        "file_type": "bed",
+        "mime_type": "plain/txt",
+        "size": 29814,
+        "tags": [],
+        "created_time": "2022-09-28T03:44:41.506377Z",
+        "updated_time": "2022-09-28T03:44:41.506377Z",
+        "checksums": [
+          {
+            "checksum": "dc292c7e89bb7dceda838c94be1e297ba9304f9e5495ee51cc6ef7129b2be52c",
+            "type": "sha256"
+          }
+        ],
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "access_url": {
+              "url": "hdfs://localhost:9000/inputs/datasetBed/contiguous_unmasked_regions_3101_parts.bed",
+              "headers": {}
+            },
+            "region": "westus3",
+            "access_tier": "hot"
+          }
+        ]
+      }
+    ],
+    "scatterDemo.bedPartitionTask.output": {
+      "id": "drs_default_id",
+      "name": "variant_effect_output.txt",
+      "file_type": "txt",
+      "mime_type": "application/octet-stream",
+      "description": "Auto-created by WE2 in Run: run_deltalake_demo_12",
+      "size": 10,
+      "tags": [
+        "Deltalake-Test/vcfDemo/vcfAnnotationTask/vcfOutput1"
+      ],
+      "created_time": "2022-10-06T20:11:38",
+      "updated_time": "2022-10-06T20:11:38",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/plugin_test/scatter/outputs/out.bed",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    },
+    "scatterDemo.bedPartitionTask.ref": {
+      "id": "drs_fz9dX0AHNatBxpn",
+      "name": ".vep",
+      "self_uri": "drs://dev-api.seqslab.net/drs_fz9dX0AHNatBxpn",
+      "file_type": "folder",
+      "mime_type": "folder",
+      "size": 100000,
+      "tags": [],
+      "created_time": "2022-10-06T01:55:03.564977Z",
+      "updated_time": "2022-10-06T01:55:03.564977Z",
+      "checksums": [
+        {
+          "checksum": "d8597238ef332372806b3bd5dfa89692df759e04f64bf285b32ec7be5df2095d",
+          "type": "sha256"
+        }
+      ],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/shellExecutor/",
+            "headers": {}
+          },
+          "region": "westus3",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "scatterDemo.bedPartitionTask.ref":  [ "RefLoader" ],
+    "scatterDemo.bedPartitionTask.bed": [
+      {
+        "name": "BatchDataLoader",
+        "arguments": {
+          "batchSize": 2,
+          "batchExecution": "PerBatch"
+        }
+      },
+      {
+        "name": "BedPartitioner",
+        "arguments": {
+          "refSeqDict": "https://seqslabbundles.blob.core.windows.net/static/reference/38/GRCH/ref.dict",
+          "partBed": "/bed/38/chromosomes"
+        }
+      },
+      "BedExecutor"
+    ],
+    "scatterDemo.bedPartitionTask.output": []
+  }
+}

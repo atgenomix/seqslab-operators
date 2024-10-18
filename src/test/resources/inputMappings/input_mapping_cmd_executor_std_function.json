@@ -153,7 +153,7 @@
       {
         "name": "VcfPartitioner",
         "arguments": {
-          "refSeqDict": "/reference/19/GRCH/ref.dict",
+          "refSeqDict": "/reference/19/HG/ref.dict",
           "partBed": "/bed/19/chromosomes"
         }
       },

@@ -1,0 +1,7 @@
+MERGE INTO DB t
+USING inputData s
+ON t.Country = s.Country
+WHEN MATCHED
+  THEN UPDATE SET *
+WHEN NOT MATCHED
+  THEN INSERT *

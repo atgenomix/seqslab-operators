@@ -1,0 +1,66 @@
+{
+  "inputs": {
+    "DeltalakeTask9.MergeTable.DB": "table.delta",
+    "DeltalakeTask9.MergeTable.inputData": "table_update.csv"
+  },
+  "outputs": {
+  },
+  "datasets": {
+    "DeltalakeTask9.MergeTable.inputData": {
+      "id": "drs_LJwYGSHSjWhkKRx",
+      "self_uri": "drs://127.0.0.1/drs_LJwYGSHSjWhkKRx",
+      "file_type": "csv",
+      "mime_type": "application/octet-stream",
+      "metadata": {},
+      "size": 19895,
+      "created_time": "2023-08-06T00:11:49.068000Z",
+      "updated_time": "2023-08-06T00:11:49.068000Z",
+      "version": "2023-08-06T00:11:49.355086Z",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/merge/table_update.csv",
+            "headers": {}
+          },
+          "region": "unknown",
+          "access_tier": "hot",
+          "id": 309136
+        }
+      ]
+    },
+    "DeltalakeTask9.MergeTable.DB": {
+      "id": "drs_Test9:Test9.MergeTable.table_Yxba",
+      "name": "table",
+      "file_type": "delta",
+      "mime_type": "application/octet-stream",
+      "size": 10,
+      "tags": [
+        "outputs/DeltalakeTask9/MergeTable/outTable"
+      ],
+      "created_time": "2023-08-07T00:56:29",
+      "updated_time": "<updatedTime>",
+      "checksums": [],
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "access_url": {
+            "url": "hdfs://localhost:9000/inputs/merge/table.delta",
+            "headers": {}
+          },
+          "region": "westus2",
+          "access_tier": "hot"
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "DeltalakeTask9.MergeTable.inputData": [
+      "TableLocalizationExecutor"
+    ],
+    "DeltalakeTask9.MergeTable.DB": [
+      "TableLocalizationExecutor"
+    ]
+  }
+}

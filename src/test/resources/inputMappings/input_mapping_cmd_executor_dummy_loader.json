@@ -1,0 +1,17 @@
+{
+  "inputs": {
+    "NIPT1.CreateInterpretation.runDate": "2023-08-22 08:00",
+    "NIPT1.CreateInterpretation.diseaseID": "https://api.seqslab.net/trs/v2/tools/40/versions/1.0.0/",
+    "NIPT1.CreateInterpretation.ID": "23080617",
+    "NIPT1.CreateInterpretation.phenopacketID": "23080617"
+  },
+  "outputs": {
+    "NIPT1.CreateInterpretation.interpretationID": "read_string(\"iid.txt\")",
+    "NIPT1.CreateInterpretation.runDateStr": "read_string(\"rundate.txt\")",
+    "NIPT1.CreateInterpretation.diagnosisID": "read_string(\"did.txt\")",
+    "NIPT1.CreateInterpretation.readLinesTest": "read_lines(\"read_lines.txt\")",
+    "NIPT1.CreateInterpretation.readInt": "read_int(\"read_int.txt\")"
+  },
+  "datasets": {},
+  "tasks": {}
+}

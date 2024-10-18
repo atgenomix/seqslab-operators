@@ -209,7 +209,7 @@
     "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.inFileFastqR2": [
       {
         "name": "FastqPartitioner",
-        "arguments": {"readsPerChunk":  2500000}
+        "arguments": {"readsPerChunk":  "2500000"}
       }
     ],
     "GermlineSnpsIndelsGatk4Hg19.PreProcessingForVariantDiscovery_GATK4.Fastp.outFileFastpHtml": [],
