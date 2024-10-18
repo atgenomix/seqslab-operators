@@ -56,7 +56,7 @@
       {
         "name": "DeltaTablePartitionWriter",
         "arguments": {
-          "partitionBy": ["Gene"]
+          "partitionBy": "Gene"
         }
       }
     ]

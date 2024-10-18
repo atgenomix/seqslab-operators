@@ -1,8 +1,8 @@
 package com.atgenomix.seqslab.operators.partitioner
 
-import com.atgenomix.seqslab.operators.partitioner.BamPartitionerPart1Factory.BamPartitionerPart1
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.operators.partitioner.BamPartitionerPart1Factory.BamPartitionerPart1
 import htsjdk.samtools.SAMFileHeader
 import org.apache.spark.sql.functions.{col, udf}
 import org.apache.spark.sql.{Dataset, Row}
@@ -22,6 +22,7 @@ object BamPartitionerPart1Factory {
       val toNull = udf(start2Null)
 
       t1.withColumn("refNameIdx", toNull(col("referenceName")))
+        .dropDuplicates(Seq("raw"))
         .coalesce(1)    // use coalesce to avoid too many & too large shuffle data
         .sortWithinPartitions(col("refNameIdx").asc_nulls_last, col("alignmentStart"))
         .drop("refNameIdx")

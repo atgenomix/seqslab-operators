@@ -1,17 +1,17 @@
 package com.atgenomix.seqslab.operators.executor
 
-import com.atgenomix.seqslab.operators.executor.BamExecutorFactory.BamExecutor
 import com.atgenomix.seqslab.piper.common.utils.{FileUtil, ProcessUtil}
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsFileLocalization}
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.operators.executor.BamExecutorFactory.BamExecutor
 import htsjdk.samtools.util.BinaryCodec
 import htsjdk.samtools.{SAMFileHeader, SAMTextHeaderCodec}
 import org.apache.spark.sql.Row
 
-import java.io.{OutputStream, StringWriter}
+import java.io.{BufferedOutputStream, OutputStream, StringWriter}
 import java.nio.charset.Charset
 import java.util
-import scala.jdk.CollectionConverters.collectionAsScalaIterableConverter
+import scala.collection.JavaConverters.collectionAsScalaIterableConverter
 
 object BamExecutorFactory {
   class BamExecutor(pluginCtx: PluginContext, operatorCtx: OperatorContext) extends Executor
@@ -30,14 +30,20 @@ object BamExecutorFactory {
 
     override def call(t1: util.Iterator[Row]): Integer = {
       val r = FileUtil.writeBgz(path){ bos =>
-        val h = operatorCtx.get("bamHeader").asInstanceOf[SAMFileHeader]
-        writeHeader(bos, h)
+        val header = operatorCtx.get("bamHeader")
+        assert(header != null, "BamExecutor: bamHeader is null")
 
+        writeHeader(bos, header.asInstanceOf[SAMFileHeader])
+
+        val bufferedOS = new BufferedOutputStream(bos)
         while (t1.hasNext) {
           val row = t1.next()
           val bam = row.getAs[Array[Byte]]("raw")
-          bos.write(bam)
+          bufferedOS.write(bam)
         }
+
+        // make sure write back to destination
+        bufferedOS.flush()
       }
 
       if (r == 0) {

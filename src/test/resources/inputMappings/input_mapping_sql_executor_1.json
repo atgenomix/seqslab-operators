@@ -2,18 +2,38 @@
   "inputs": {
     "deltalake.table1": {
       "vcf": "/tmp/source.vcf",
-      "1:CHROM": "String",
-      "2:POS": 0,
-      "3:ID": "String",
-      "4:REF": "String",
-      "5:ALT": "String",
-      "6:QUAL": 0,
-      "7:FILTER": "String",
-      "8:INFO": "String",
-      "9:FORMAT": "String",
-      "10:HG001": "String"
+      "CHROM__1": "String",
+      "POS__2": 0,
+      "ID__3": "String",
+      "REF__4": "String",
+      "ALT__5": "String",
+      "QUAL__6": 0,
+      "FILTER__7": "String",
+      "INFO__8": "String",
+      "FORMAT__9": "String",
+      "HG001__10": "String"
     },
-    "deltalake.table0": "/tmp/source.delta"
+    "deltalake.table0": "/tmp/source.delta",
+    "deltalake.om": {
+      "gDNA": "String",
+      "inFile": "test.tsv",
+      "protein": "String",
+      "Consequence": "Array[String]",
+      "Gene": "String",
+      "EXON": {
+        "rank": "String"
+      },
+      "Context": "String",
+      "Reference": "Array[String]",
+      "Source": "Array[String]",
+      "INFO": "String",
+      "cDNA": "String",
+      "Feature": "String",
+      "INTRON": {
+        "rank": "String"
+      },
+      "BIOTYPE": "Array[String]"
+    }
   },
   "outputs": {
     "deltalake.output": "/tmp/source.delta"
@@ -22,10 +42,11 @@
     "deltalake.table1.vcf": {
       "id": "drs_xxxxxxxxxxxxxxx",
       "created_time": "2021-10-30T01:45:31.004766Z",
+      "updated_time": "2021-10-30T01:45:31.004766Z",
       "checksums": [],
       "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
       "file_type": "tsv",
-      "size": 2787810,
+      "size": 2787759,
       "access_methods": [
         {
           "type": "hdfs",
@@ -35,6 +56,27 @@
           "access_url": {
             "headers": {},
             "url": "hdfs://localhost:9000/inputs/vcfCsv/test1.vcf"
+          }
+        }
+      ]
+    },
+    "deltalake.om.inFile": {
+      "id": "drs_xxxxxxxxxxxxxxx",
+      "created_time": "2021-10-30T01:45:31.004766Z",
+      "updated_time": "2021-10-30T01:45:31.004766Z",
+      "checksums": [],
+      "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+      "file_type": "tsv",
+      "size": 1642,
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "region": "westus2",
+          "access_tier": "hot",
+          "access_id": "11",
+          "access_url": {
+            "headers": {},
+            "url": "hdfs://localhost:9000/inputs/tsv/cgi_oncogenic_mutations.tsv"
           }
         }
       ]
@@ -66,6 +108,7 @@
       "updated_time": "<updatedTime>",
       "checksums": [],
       "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+      "file_type": "delta",
       "size": 238196,
       "access_methods": [
         {
@@ -83,6 +126,7 @@
   },
   "tasks": {
     "deltalake.table0": [ "TableLocalizationExecutor" ],
+    "deltalake.om": [ "TableLocalizationExecutor" ],
     "deltalake.table1": [ "TableLocalizationExecutor" ],
     "deltalake.output": []
   }

@@ -1,0 +1,1 @@
+ALTER TABLE table1 ADD COLUMNS (AddName string)

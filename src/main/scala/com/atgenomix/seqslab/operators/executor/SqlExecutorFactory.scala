@@ -1,8 +1,8 @@
 package com.atgenomix.seqslab.operators.executor
 
+import com.atgenomix.seqslab.piper.plugin.api._
+import com.atgenomix.seqslab.piper.plugin.api.executor._
 import com.atgenomix.seqslab.operators.executor.SqlExecutorFactory.TableLocalizationExecutor
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
-import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsTableLocalization}
 import org.apache.spark.sql.{Dataset, Row}
 
 object SqlExecutorFactory {

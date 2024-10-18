@@ -1,44 +1,49 @@
 {
   "inputs": {
-    "deltalake.table1": {
-      "vcf": "/tmp/source.vcf",
-      "CHROM": "String",
-      "POS": 0,
-      "ID": "String",
-      "REF": "String",
-      "ALT": "String",
-      "QUAL": 0,
-      "FILTER": "String",
-      "INFO": "String",
-      "FORMAT": "String",
-      "HG001": "String"
-    },
+    "deltalake.table1": [
+      {
+        "vcf": "/tmp/source.vcf",
+        "CHROM": "String",
+        "POS": 0,
+        "ID": "String",
+        "REF": "String",
+        "ALT": "String",
+        "QUAL": 0,
+        "FILTER": "String",
+        "INFO": "String",
+        "FORMAT": "String",
+        "HG001": "String"
+      }
+    ],
     "deltalake.table0": "/tmp/source.delta"
   },
   "outputs": {
-    "deltalake.output": "/tmp/source.delta"
+    "deltalake.output": "test2.delta"
   },
   "datasets": {
-    "deltalake.table1.vcf": {
-      "id": "drs_xxxxxxxxxxxxxxx",
-      "created_time": "2021-10-30T01:45:31.004766Z",
-      "checksums": [],
-      "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
-      "file_type": "csv",
-      "size": 238196,
-      "access_methods": [
-        {
-          "type": "hdfs",
-          "region": "westus2",
-          "access_tier": "hot",
-          "access_id": "11",
-          "access_url": {
-            "headers": {},
-            "url": "hdfs://localhost:9000/inputs/vcfCsv/test1.vcf"
+    "deltalake.table1.vcf": [
+      {
+        "id": "drs_xxxxxxxxxxxxxxx",
+        "created_time": "2021-10-30T01:45:31.004766Z",
+        "updated_time": "2021-10-30T01:45:31.004766Z",
+        "checksums": [],
+        "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+        "file_type": "csv",
+        "size": 238196,
+        "access_methods": [
+          {
+            "type": "hdfs",
+            "region": "westus2",
+            "access_tier": "hot",
+            "access_id": "11",
+            "access_url": {
+              "headers": {},
+              "url": "hdfs://localhost:9000/inputs/vcfCsv/test2.vcf"
+            }
           }
-        }
-      ]
-    },
+        ]
+      }
+    ],
     "deltalake.table0": {
       "id": "drs_xxxxxxxxxxxxxxx",
       "created_time": "2021-10-30T01:45:31.004766Z",
@@ -64,6 +69,7 @@
       "id": "drs_xxxxxxxxxxxxxxx",
       "created_time": "2021-10-30T01:45:31.004766Z",
       "checksums": [],
+      "file_type": "delta",
       "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
       "size": 238196,
       "access_methods": [

@@ -1,0 +1,1 @@
+SELECT * FROM vcfInput LIMIT 100

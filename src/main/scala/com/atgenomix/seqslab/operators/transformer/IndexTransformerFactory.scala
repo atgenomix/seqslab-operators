@@ -1,12 +1,12 @@
 package com.atgenomix.seqslab.operators.transformer
 
-import com.atgenomix.seqslab.operators.transformer.IndexTransformerFactory.IndexTransformer
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{Transformer, TransformerSupport}
+import com.atgenomix.seqslab.operators.transformer.IndexTransformerFactory.IndexTransformer
 import org.apache.spark.sql.types.{LongType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Dataset, Row}
 
-import scala.jdk.CollectionConverters.mapAsScalaMapConverter
+import scala.collection.JavaConverters.mapAsScalaMapConverter
 
 
 object IndexTransformerFactory {
@@ -23,7 +23,11 @@ object IndexTransformerFactory {
 
     override def call(t1: Dataset[Row]): Dataset[Row] = {
       val key = f"${this.getClass.getSimpleName}:startsFrom"
-      val rdd = operatorCtx.getProperties.asScala.get(key).map(_.asInstanceOf[Double].toInt) match {
+      val rdd = operatorCtx.getProperties.asScala.get(key).map(
+        x => {
+          if (x.isInstanceOf[Number]) x.asInstanceOf[Double].toInt
+          else x.asInstanceOf[String].toDouble.toInt
+        }) match {
         case Some(starts) => t1.rdd.zipWithIndex.map {
           case (row, index) => Row.fromSeq(row.toSeq :+ (index + starts))
         }

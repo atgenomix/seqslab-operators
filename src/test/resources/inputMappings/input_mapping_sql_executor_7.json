@@ -126,9 +126,7 @@
       {
         "name": "DeltaTablePartitionWriter",
         "arguments": {
-          "partitionBy": [
-            "Samples_ID"
-          ]
+          "partitionBy": "Samples_ID"
         }
       }
     ],

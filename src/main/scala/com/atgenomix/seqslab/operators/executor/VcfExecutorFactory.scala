@@ -1,12 +1,12 @@
 package com.atgenomix.seqslab.operators.executor
 
-import com.atgenomix.seqslab.operators.executor.VcfExecutorFactory.VcfExecutor
 import com.atgenomix.seqslab.piper.common.utils.{FileUtil, ProcessUtil}
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsFileLocalization}
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.operators.executor.VcfExecutorFactory.VcfExecutor
 import org.apache.spark.sql.Row
 
-import java.io.{BufferedWriter, OutputStreamWriter}
+import java.io.BufferedOutputStream
 import java.util
 import scala.collection.mutable.ArrayBuffer
 
@@ -28,21 +28,27 @@ object VcfExecutorFactory {
 
     override def call(t1: util.Iterator[Row]): Integer = {
       val r = FileUtil.writeBgz(path){ bos =>
-        val bw = new BufferedWriter(new OutputStreamWriter(bos))
-        val h = operatorCtx.get("vcfHeader").asInstanceOf[ArrayBuffer[String]]
-        bw.write(h.mkString("\n"))
-        bw.write("\n")
+        val h = operatorCtx.get("vcfHeader")
+        assert(h != null, "VcfExecutor: vcfHeader is null")
+
+        val header = h.asInstanceOf[ArrayBuffer[String]]
+        val bufferedOS = new BufferedOutputStream(bos)
+        bufferedOS.write(header.mkString("\n").getBytes)
+        bufferedOS.write("\n".getBytes)
+
         while (t1.hasNext) {
           val row = t1.next()
-          val vcf = row.schema.fields
-            // remove field generated from VcfPartitioner
-            .filter(f => f.name != "partId")
-            .map { field => s"${row.getAs[String](field.name)}" }.mkString("\t")
-          bw.write(vcf)
-          bw.write("\n")
+          val vcf = row.schema
+            .fields
+            // remove fields generated from VcfPartitioner
+            .filter(f => f.name != "partId" && f.name != "col")
+            .map { field => s"${row.getAs[String](field.name)}" }
+            .mkString("\t")
+
+          bufferedOS.write(s"$vcf\n".getBytes)
         }
         // make sure write back to destination
-        bw.flush()
+        bufferedOS.flush()
       }
 
       if (r == 0) {

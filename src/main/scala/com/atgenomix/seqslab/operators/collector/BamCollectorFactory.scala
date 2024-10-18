@@ -1,8 +1,8 @@
 package com.atgenomix.seqslab.operators.collector
 
-import com.atgenomix.seqslab.operators.collector.BamCollectorFactory.BamCollector
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, OperatorPipelineV3, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.collector.{Collector, CollectorSupport, SupportsRepartitioning}
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, OperatorPipelineV3, PluginContext}
+import com.atgenomix.seqslab.operators.collector.BamCollectorFactory.BamCollector
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
 import org.apache.spark.sql.types.{DataTypes, StructType}
@@ -10,7 +10,7 @@ import org.apache.spark.sql.types.{DataTypes, StructType}
 import java.io.{BufferedReader, FileInputStream, FileReader}
 import java.nio.file.{DirectoryStream, Path}
 import java.util
-import scala.jdk.CollectionConverters.asScalaIteratorConverter
+import scala.collection.JavaConverters.asScalaIteratorConverter
 
 object BamCollectorFactory {
   private class BamCollector(pluginCtx: PluginContext, operatorCtx: OperatorContext) extends Collector

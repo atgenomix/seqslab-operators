@@ -1,10 +1,10 @@
 package com.atgenomix.seqslab.operators.executor
 
-import com.atgenomix.seqslab.operators.executor.FastqExecutorFactory.FastqExecutor
 import com.atgenomix.seqslab.piper.common.genomics.Fastq
 import com.atgenomix.seqslab.piper.common.utils.FileUtil
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsFileLocalization}
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.operators.executor.FastqExecutorFactory.FastqExecutor
 import org.apache.spark.sql.Row
 
 import java.util

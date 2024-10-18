@@ -1,9 +1,9 @@
 package com.atgenomix.seqslab.operators.executor
 
-import com.atgenomix.seqslab.operators.executor.BedExecutorFactory.BedExecutor
 import com.atgenomix.seqslab.piper.common.utils.FileUtil
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.executor.{Executor, ExecutorSupport, SupportsFileLocalization}
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.operators.executor.BedExecutorFactory.BedExecutor
 import org.apache.spark.sql.Row
 
 import java.util
@@ -27,11 +27,15 @@ object BedExecutorFactory {
 
     override def call(t1: util.Iterator[Row]): Integer = {
       val r = FileUtil.write(path){ bw =>
-        val h = operatorCtx.get("bedHeader").asInstanceOf[ArrayBuffer[String]]
-        if (h.nonEmpty) {
-          bw.write(h.mkString("\n"))
+        val h = operatorCtx.get("bedHeader")
+        assert(h != null, "BedExecutor: bedHeader is null")
+
+        val header = h.asInstanceOf[ArrayBuffer[String]]
+        if (header.nonEmpty) {
+          bw.write(header.mkString("\n"))
           bw.write("\n")
         }
+
         while (t1.hasNext) {
           val row = t1.next()
           val bed = row.schema.fields

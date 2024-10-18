@@ -1,0 +1,55 @@
+{
+  "inputs": {
+    "deltalake.report": "vcf.gz"
+  },
+  "outputs": {
+    "deltalake.resultReport": "result.vcf"
+  },
+  "datasets": {
+    "deltalake.report": {
+      "id": "drs_xxxxxxxxxxxxxxx",
+      "created_time": "2021-10-30T01:45:31.004766Z",
+      "updated_time": "2021-10-30T01:45:31.004766Z",
+      "checksums": [],
+      "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+      "file_type": "json.gz",
+      "size": 39196,
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "region": "westus2",
+          "access_tier": "hot",
+          "access_id": "11",
+          "access_url": {
+            "headers": {},
+            "url": "hdfs://localhost:9000/inputs/maf/maf.json.gz"
+          }
+        }
+      ]
+    },
+    "deltalake.resultReport": {
+      "id": "drs_xxxxxxxxxxxxxxx",
+      "created_time": "2021-10-30T01:45:31.004766Z",
+      "checksums": [],
+      "self_uri": "drs://seqslabapi-dev.azurewebsites.net/drs_xxxxxxxxxxxxxxx/",
+      "file_type": "vcf",
+      "size": 238196,
+      "access_methods": [
+        {
+          "type": "hdfs",
+          "region": "westus2",
+          "access_tier": "hot",
+          "access_id": "11",
+          "access_url": {
+            "headers": {},
+            "url": "hdfs://localhost:9000/plugin_test/maf_to_vcf_test/outputs/final_report.vcf"
+          }
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "deltalake.report": [ "MafLoader", "MafPartitioner", "MafToVcfTransformer", "VcfPartitionerPart1", "VcfExecutor" ],
+    "deltalake.resultReport": []
+  }
+}

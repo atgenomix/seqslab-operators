@@ -34,6 +34,7 @@ import java.util
 import scala.util.control.NonFatal
 
 /**
+  * Atgenomix Version of VCFLineToInternalRowConverter, copied from glow. It is necessary to redefined for spark usage.
   * Converts the raw bytes in a VCF line into an [[InternalRow]]
   *
   * @param header The VCF header object this is currently only used to extract sample ids

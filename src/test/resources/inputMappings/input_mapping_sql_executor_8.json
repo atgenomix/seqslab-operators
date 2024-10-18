@@ -1,14 +1,14 @@
 {
   "inputs": {
     "RNASingleCellCellRangerScanpy.Compress10XFiles.features": {
-      "file": "GSM5550474_Gan_27_features.tsv.gz",
-      "1:gene_id" : "String",
-      "2:gene_name": "String",
-      "3:type": "String"
+      "file": "GSM5550496_Gan_56_features.tsv.gz",
+      "gene_id__1" : "String",
+      "gene_name__2": "String",
+      "type__3": "String"
     },
-    "RNASingleCellCellRangerScanpy.Compress10XFiles.barcodes": "GSM5550474_Gan_27_barcodes.tsv.gz",
-    "RNASingleCellCellRangerScanpy.Compress10XFiles.matrix": "GSM5550474_Gan_27_matrix.mtx.gz",
-    "RNASingleCellCellRangerScanpy.Compress10XFiles.sampleID": "GSM5550474"
+    "RNASingleCellCellRangerScanpy.Compress10XFiles.barcodes": "GSM5550496_Gan_56_barcodes.tsv.gz",
+    "RNASingleCellCellRangerScanpy.Compress10XFiles.matrix": "GSM5550496_Gan_56_matrix.mtx.gz",
+    "RNASingleCellCellRangerScanpy.Compress10XFiles.sampleID": "GSM5550496_Gan_56"
   },
   "outputs": {
     "RNASingleCellCellRangerScanpy.Compress10XFiles.outFile": "test8.delta"
@@ -20,7 +20,7 @@
       "file_type": "tsv.gz",
       "mime_type": "application/octet-stream",
       "metadata": {},
-      "size": 304728,
+      "size": 19895,
       "created_time": "2023-08-06T00:11:49.068000Z",
       "updated_time": "2023-08-06T00:11:49.068000Z",
       "version": "2023-08-06T00:11:49.355086Z",
@@ -29,7 +29,7 @@
         {
           "type": "https",
           "access_url": {
-            "url": "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM5550474&format=file&file=GSM5550474%5FGan%5F27%2Efeatures%2Etsv%2Egz",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM5550496&format=file&file=GSM5550496%5FGan%5F56%2Efeatures%2Etsv%2Egz",
             "headers": {}
           },
           "region": "unknown",
@@ -53,7 +53,7 @@
         {
           "type": "https",
           "access_url": {
-            "url": "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM5550474&format=file&file=GSM5550474%5FGan%5F27%2Ebarcodes%2Etsv%2Egz",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM5550496&format=file&file=GSM5550496%5FGan%5F56%2Ebarcodes%2Etsv%2Egz",
             "headers": {}
           },
           "region": "unknown",
@@ -68,16 +68,16 @@
       "file_type": "mtx.gz",
       "mime_type": "application/gzip",
       "metadata": {},
-      "size": 51905402,
+      "size": 20473,
       "created_time": "2023-08-06T00:13:07.014000Z",
       "updated_time": "2023-08-06T00:13:07.014000Z",
       "version": "2023-08-06T00:13:07.365004Z",
       "checksums": [],
       "access_methods": [
         {
-          "type": "https",
+          "type": "hdfs",
           "access_url": {
-            "url": "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM5550474&format=file&file=GSM5550474%5FGan%5F27%2Ematrix%2Emtx%2Egz",
+            "url": "hdfs://localhost:9000/inputs/matrix/GSM5550496_Gan_56.matrix.mtx.gz",
             "headers": {}
           },
           "region": "unknown",
@@ -114,9 +114,15 @@
   "tasks": {
     "RNASingleCellCellRangerScanpy.Compress10XFiles.features": [
       {
+        "name": "CsvInMemoryLoader",
+        "arguments": {
+          "header": "false"
+        }
+      },
+      {
         "name": "IndexTransformer",
         "arguments": {
-          "startsFrom": 1
+          "startsFrom": "1"
         }
       },
       "TableLocalizationExecutor"
@@ -125,7 +131,7 @@
       {
         "name": "CsvInMemoryLoader",
         "arguments": {
-          "header": false
+          "header": "false"
         }
       },
       {

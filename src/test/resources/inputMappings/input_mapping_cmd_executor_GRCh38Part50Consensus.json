@@ -64,7 +64,7 @@
       {
         "name": "ConsensusBamPartitioner",
         "arguments": {
-          "refSeqDict": "/reference/38/GRCH/ref.dict",
+          "refSeqDict": "",
           "partBed": "/bed/38/contiguous_unmasked_regions_50_parts"
         }
       },

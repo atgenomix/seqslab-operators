@@ -1,9 +1,9 @@
 package com.atgenomix.seqslab.operators.loader
 
-import com.atgenomix.seqslab.operators.loader.SingleNodeDataSource.SingleNodeDataLoader
 import com.atgenomix.seqslab.piper.common.utils.{AzureUtil, HDFSUtil, HttpUtil}
+import com.atgenomix.seqslab.piper.plugin.api.loader._
 import com.atgenomix.seqslab.piper.plugin.api.{DataSource, OperatorContext, OperatorPipelineV3, PluginContext}
-import com.atgenomix.seqslab.piper.plugin.api.loader.{Loader, LoaderSupport, SupportsCopyToLocal, SupportsHadoopDFS, SupportsReadPartitions}
+import com.atgenomix.seqslab.operators.loader.SingleNodeDataSource.SingleNodeDataLoader
 import models.SeqslabAny
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructT
 import java.net.URI
 import java.nio.file.{Files, Paths}
 import java.util
-import scala.jdk.CollectionConverters.{asJavaIteratorConverter, mapAsScalaMapConverter}
+import scala.collection.JavaConverters.{asJavaIteratorConverter, mapAsScalaMapConverter}
 
 object SingleNodeDataSource {
   class SingleNodeDataLoader(pluginCtx: PluginContext, operatorCtx: OperatorContext) extends Loader
@@ -40,7 +40,7 @@ object SingleNodeDataSource {
     override def call(): util.Iterator[Row] = {
       val uri = new URI(srcInfo.getUrl)
       val p = Paths.get(path)
-      val auth = srcInfo.asScala.get("headers") match {
+      val auth = Option(srcInfo.get("headers")) match {
         case Some(headers) =>
           headers.asInstanceOf[Map[String, SeqslabAny]].get("Authorization") match {
             case Some(any) => any.o.map(f => f.toString)
@@ -61,7 +61,7 @@ object SingleNodeDataSource {
           HttpUtil.download(srcInfo.getUrl, path, auth)
         case "jdbc" =>
           ???
-        case _ =>
+        case "s3a" | _ =>
           HDFSUtil.download(uri, p)(hadoopConfMap)
       }
       Iterator.empty.asJava

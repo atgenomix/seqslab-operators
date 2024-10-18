@@ -1,10 +1,11 @@
 package com.atgenomix.seqslab.operators.partitioner
 
-import com.atgenomix.seqslab.operators.partitioner.BedPartitionerFactory.BedPartitioner
+import com.atgenomix.seqslab.piper.common.Const
 import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
-import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
-import com.atgenomix.seqslab.udf.genomeBedPartFunc
+import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
+import com.atgenomix.seqslab.operators.partitioner.BedPartitionerFactory.BedPartitioner
+import com.atgenomix.seqslab.udf.GenomeBedPartFunc
 import org.apache.spark.sql.functions.{col, explode, udf}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{Column, DataFrame, Dataset, Row, functions}
@@ -16,29 +17,35 @@ object BedPartitionerFactory {
   class BedPartitioner(pluginCtx: PluginContext, operatorCtx: OperatorContext) extends Transformer with SupportsPartitioner {
     private var refSeqDict: java.net.URL = null
     private var partBed: java.net.URL = null
-    private val opName: String = "BedPartitioner"
+    private val opName: String = this.getName
     private var udfName: String = null
 
     override def init(i: Int, i1: Int): Transformer = {
-      val ref = operatorCtx.get("BedPartitioner:refSeqDict")
-      val bed = operatorCtx.get("BedPartitioner:partBed")
+      val ref = operatorCtx.get(s"$opName:refSeqDict")
+      val bed = operatorCtx.get(s"$opName:partBed")
 
       this.refSeqDict = if (ref != null) {
         val rp = getClass.getResource(ref.asInstanceOf[String])
-        if (rp != null)
+        if (rp != null) {
           rp
-        else
-          new URL(ref.asInstanceOf[String])
-      } else throw new IllegalArgumentException("BedPartitioner:refSeqDict cannot be null")
+        } else {
+          val str = ref.asInstanceOf[String]
+          if (str.nonEmpty) {
+            new URL(ref.asInstanceOf[String])
+          } else {
+            throw new IllegalArgumentException(s"$opName:refSeqDict cannot be empty string")
+          }
+        }
+      } else throw new IllegalArgumentException(s"$opName:refSeqDict cannot be null")
       this.partBed = if (bed != null) {
         val rp = getClass.getResource(bed.asInstanceOf[String])
         if (rp != null)
           rp
         else
           new URL(bed.asInstanceOf[String])
-      } else throw new IllegalArgumentException("BedPartitioner:partBed cannot be null")
+      } else throw new IllegalArgumentException(s"$opName:partBed cannot be null")
 
-      val udf = org.apache.spark.sql.functions.udf(new genomeBedPartFunc(this.partBed, this.refSeqDict), ArrayType(LongType))
+      val udf = org.apache.spark.sql.functions.udf(new GenomeBedPartFunc(this.partBed, this.refSeqDict), ArrayType(LongType))
       this.udfName = f"$opName-${refSeqDict.getFile}-${partBed.getFile}"
       pluginCtx.piper.spark.udf.register(this.udfName, udf)
 
@@ -75,7 +82,7 @@ object BedPartitionerFactory {
       val partitionIdUDF = udf((key: Long) => partitioner.getPartition(key))
 
       t1.withColumn("key", keyColumn)
-        .select(explode(col("key")), col("row"))
+        .select(explode(col("key")) :: col("row") :: Const.preservedColumns: _*)
         .withColumn("partId", partitionIdUDF(col("col")))
         .repartition(numPartitions(), col("partId"))
         .sortWithinPartitions(col("partId"), col("col"))
