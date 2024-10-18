@@ -13,7 +13,7 @@ object SampleListTableTransformerFactory {
 
     var _df: Option[DataFrame] = None
     override def call(t1: DataFrame): DataFrame = {
-      val className = "com.atgenomix.seqslab.udf.hive.com.atgenomix.seqslab.udf.hive.RetrievePositiveGenotype"
+      val className = "com.atgenomix.seqslab.udf.hive.RetrievePositiveGenotype"
       t1.sparkSession.sql(s"CREATE OR REPLACE TEMPORARY FUNCTION retrieve_positive AS '$className'")
       _df = Option(
         t1.withColumn("alternateAlleles", concat_ws(",", col("alternateAlleles")))
