@@ -14,7 +14,7 @@
  * laws and state trade secret laws, punishable by civil and criminal penalties.
  */
 
-package com.atgenomix.seqslab.piper.plugin.atgenomix
+package com.atgenomix.seqslab
 
 import com.atgenomix.seqslab.piper.common.utils.RetryUtil
 import com.atgenomix.seqslab.piper.plugin.api._
@@ -46,13 +46,13 @@ class AtgenomixPiperPlugin extends PiperPlugin {
     Glow.register(context.spark, false)
     context.spark.conf.getOption("spark.seqslab.kernel.hive.udf.register.enabled") match {
       case Some(r) if r.toLowerCase.equals("true") =>
-        val libraryPrefix = "com.atgenomix.seqslab.piper.plugin.atgenomix.udf.hive"
+        val libraryPrefix = "com.atgenomix.seqslab.udf.hive"
         Map(
-          "except_sample_id" -> "com.atgenomix.seqslab.udf.hive.ExceptSampleId",
-          "gpt" -> "com.atgenomix.seqslab.udf.hive.OpenAI",
-          "retrieve_pattern" -> "com.atgenomix.seqslab.udf.hive.RetrievePattern",
-          "retrieve_positive_genotype" -> "com.atgenomix.seqslab.udf.hive.RetrievePositiveGenotype",
-          "retrieve_rs_id" -> "com.atgenomix.seqslab.udf.hive.RetrieveRsID",
+          "except_sample_id" -> "ExceptSampleId",
+          "gpt" -> "OpenAI",
+          "retrieve_pattern" -> "RetrievePattern",
+          "retrieve_positive_genotype" -> "RetrievePositiveGenotype",
+          "retrieve_rs_id" -> "RetrieveRsID",
         ).foreach { case (k, v) =>
           val sqlTemp = s"CREATE OR REPLACE TEMPORARY FUNCTION $k AS '$libraryPrefix.$v'"
           val sqlPerm = s"CREATE OR REPLACE FUNCTION default.$k AS '$libraryPrefix.$v'"

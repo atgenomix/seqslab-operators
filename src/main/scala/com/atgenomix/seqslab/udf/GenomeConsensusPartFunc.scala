@@ -1,4 +1,4 @@
-package com.atgenomix.seqslab.piper.plugin.atgenomix.udf
+package com.atgenomix.seqslab.udf
 
 import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
 import org.apache.spark.sql.api.java.UDF6

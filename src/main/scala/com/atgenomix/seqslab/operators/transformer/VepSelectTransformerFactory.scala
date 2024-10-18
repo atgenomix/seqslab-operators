@@ -17,7 +17,7 @@ object VepSelectTransformerFactory {
     var _df: Option[DataFrame] = None
 
     override def call(t1: DataFrame): DataFrame = {
-      val className = "com.atgenomix.seqslab.piper.plugin.atgenomix.udf.hive.com.atgenomix.seqslab.udf.hive.RetrievePattern"
+      val className = "com.atgenomix.seqslab.udf.hive.com.atgenomix.seqslab.udf.hive.RetrievePattern"
       t1.sparkSession.sql(s"CREATE OR REPLACE TEMPORARY FUNCTION retrieve_pattern AS '$className'")
       val df = t1.flatMap(v => {
         val index = v.fieldIndex("INFO_CSQ")

@@ -5,7 +5,7 @@ import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.operators.partitioner.BedPartitionerFactory.BedPartitioner
-import com.atgenomix.seqslab.piper.plugin.atgenomix.udf.GenomeBedPartFunc
+import com.atgenomix.seqslab.udf.GenomeBedPartFunc
 import org.apache.spark.sql.functions.{col, explode, udf}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{Column, DataFrame, Dataset, Row, functions}

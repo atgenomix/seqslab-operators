@@ -6,7 +6,7 @@ import com.atgenomix.seqslab.piper.common.genomics.GenomicPartitioner
 import com.atgenomix.seqslab.piper.plugin.api.transformer.{SupportsPartitioner, Transformer, TransformerSupport}
 import com.atgenomix.seqslab.piper.plugin.api.{OperatorContext, PluginContext}
 import com.atgenomix.seqslab.operators.partitioner.BamPartitionerFactory.BamPartitioner
-import com.atgenomix.seqslab.piper.plugin.atgenomix.udf.GenomePartFunc
+import com.atgenomix.seqslab.udf.GenomePartFunc
 import htsjdk.samtools.{SAMFileHeader, SAMSequenceDictionaryCodec, SAMSequenceRecord}
 import htsjdk.samtools.util.{AsciiWriter, IOUtil}
 import org.apache.spark.sql.api.java.UDF3
